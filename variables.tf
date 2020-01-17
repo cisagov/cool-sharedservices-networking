@@ -4,18 +4,18 @@
 # You must provide a value for each of these parameters.
 # ------------------------------------------------------------------------------
 
-variable "default_role_arn" {
-  description = "The ARN of the role to assume when performing most Terraform tasks"
-}
-
 variable "private_subnet_cidr_blocks" {
   type        = list(string)
-  description = "The CIDR blocks corresponding to the public subnets to be associated with the VPC (e.g. [\"10.10.0.0/24\", \"10.10.1.0/24\"]).  These must be /24 blocks, since we are using them to create reverse DNS zones."
+  description = "The CIDR blocks corresponding to the private subnets to be associated with the VPC (e.g. [\"10.10.0.0/24\", \"10.10.1.0/24\"]).  These must be /24 blocks, since we are using them to create reverse DNS zones."
 }
 
 variable "public_subnet_cidr_blocks" {
   type        = list(string)
   description = "The CIDR blocks corresponding to the public subnets to be associated with the VPC (e.g. [\"10.10.0.0/24\", \"10.10.1.0/24\"]).  These must be /24 blocks, since we are using them to create reverse DNS zones."
+}
+
+variable "terraform_role_arn" {
+  description = "The ARN of the role to assume when creating, modifying, or destroying resources via Terraform"
 }
 
 variable "vpc_cidr_block" {
