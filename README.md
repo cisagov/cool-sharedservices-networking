@@ -31,28 +31,28 @@ module "example" {
 }
 ```
 
-## Examples ##
-
-* [Deploying into the default VPC](https://github.com/cisagov/cool-shared-services/tree/develop/examples/default_vpc)
-
 ## Inputs ##
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-------:|:--------:|
-| aws_region | The AWS region to deploy into (e.g. us-east-1) | string | | yes |
-| aws_availability_zone | The AWS availability zone to deploy into (e.g. a, b, c, etc.) | string | | yes |
-| subnet_id | The ID of the AWS subnet to deploy into (e.g. subnet-0123456789abcdef0) | string | | yes |
+| aws_region | The AWS region to deploy into (e.g. us-east-1) | string | `us-east-1` | no |
+| private_subnet_cidr_blocks | The CIDR blocks corresponding to the private subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  These must be /24 blocks, since we are using them to create reverse DNS zones. | list(string) | | yes |
+| public_subnet_cidr_blocks | The CIDR blocks corresponding to the public subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  These must be /24 blocks, since we are using them to create reverse DNS zones. | list(string) | | yes |
 | tags | Tags to apply to all AWS resources created | map(string) | `{}` | no |
+| terraform_role_arn | The ARN of the role to assume when creating, modifying, or destroying resources via Terraform. | string | | yes |
+| trusted_cidr_blocks | A list of the CIDR blocks outside the VPC that are allowed to access the IPA servers (e.g. ["10.10.0.0/16", "10.11.0.0/16"]) | list(string) | `[]` | no |
+| vpc_cidr_block | The overall CIDR block to be associated with the VPC (e.g. "10.10.0.0/16"). | string | | yes |
 
 ## Outputs ##
 
 | Name | Description |
 |------|-------------|
-| id | The EC2 instance ID |
-| arn | The EC2 instance ARN |
-| availability_zone | The AZ where the EC2 instance is deployed |
-| private_ip | The private IP of the EC2 instance |
-| subnet_id | The ID of the subnet where the EC2 instance is deployed |
+| private_subnet_ids | The subnets IDs corresponding to the private subnets in the VPC |
+| private_subnet_nat_gw_ids | The IDs corresponding to the NAT gateways used in the private subnets in the VPC |
+| private_subnet_private_reverse_zone_ids | The zone IDs corresponding to the private Route53 reverse zones for the private subnets in the VPC |
+| public_subnet_ids | The subnets IDs corresponding to the public subnets in the VPC |
+| public_subnet_private_reverse_zone_ids | The zone IDs corresponding to the private Route53 reverse zones for the public subnets in the VPC |
+| vpc_id | The ID corresponding to the shared services VPC |
 
 ## Contributing ##
 
