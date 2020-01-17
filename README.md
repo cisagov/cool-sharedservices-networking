@@ -1,6 +1,6 @@
-# cool-shared-services #
+# cool-shared-services-networking #
 
-[![GitHub Build Status](https://github.com/cisagov/cool-shared-services/workflows/build/badge.svg)](https://github.com/cisagov/cool-shared-services/actions)
+[![GitHub Build Status](https://github.com/cisagov/cool-shared-services-networking/workflows/build/badge.svg)](https://github.com/cisagov/cool-shared-services-networking/actions)
 
 This is a generic skeleton project that can be used to quickly get a
 new [cisagov](https://github.com/cisagov) [Terraform
@@ -18,7 +18,7 @@ details on Terraform modules and the standard module structure.
 
 ```hcl
 module "example" {
-  source = "github.com/cisagov/cool-shared-services"
+  source = "github.com/cisagov/cool-shared-services-networking"
 
   aws_region            = "us-west-1"
   aws_availability_zone = "b"
