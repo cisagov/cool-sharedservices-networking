@@ -2,17 +2,8 @@
 
 [![GitHub Build Status](https://github.com/cisagov/cool-shared-services-networking/workflows/build/badge.svg)](https://github.com/cisagov/cool-shared-services-networking/actions)
 
-This is a generic skeleton project that can be used to quickly get a
-new [cisagov](https://github.com/cisagov) [Terraform
-module](https://www.terraform.io/docs/modules/index.html) GitHub
-repository started.  This skeleton project contains [licensing
-information](LICENSE), as well as [pre-commit
-hooks](https://pre-commit.com) and
-[GitHub Actions](https://github.com/features/actions) configurations
-appropriate for the major languages that we use.
-
-See [here](https://www.terraform.io/docs/modules/index.html) for more
-details on Terraform modules and the standard module structure.
+This is a Terraform module for creating the VPC, public subnets, and
+private subnets for the COOL shared services environment.
 
 ## Usage ##
 
@@ -20,14 +11,20 @@ details on Terraform modules and the standard module structure.
 module "example" {
   source = "github.com/cisagov/cool-shared-services-networking"
 
-  aws_region            = "us-west-1"
-  aws_availability_zone = "b"
-  subnet_id             = "subnet-0123456789abcdef0"
-
+  aws_region                 = "us-west-1"
+  cool_domain                = "cool.cyber.dhs.gov"
+  private_subnet_cidr_blocks = ["10.10.0.0/24", "10.10.1.0/24"]
+  public_subnet_cidr_blocks  = ["10.10.2.0/24", "10.10.3.0/24"]
   tags = {
     Key1 = "Value1"
     Key2 = "Value2"
   }
+  terraform_role_arn         = "arn:aws:iam::123456789012:role/TerraformRole"
+  trusted_cidr_blocks        = [
+    "66.66.66.0/24",
+    "108.108.108.108/32"
+  ]
+  vpc_cidr_block             = "10.10.0.0/16"
 }
 ```
 
