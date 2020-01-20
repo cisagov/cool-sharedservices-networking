@@ -15,7 +15,7 @@ variable "public_subnet_cidr_blocks" {
 }
 
 variable "terraform_role_arn" {
-  description = "The ARN of the role to assume when creating, modifying, or destroying resources via Terraform"
+  description = "The ARN of the role to assume when creating, modifying, or destroying resources via Terraform."
 }
 
 variable "vpc_cidr_block" {
@@ -40,12 +40,12 @@ variable "cool_domain" {
 
 variable "tags" {
   type        = map(string)
-  description = "Tags to apply to all AWS resources created"
+  description = "Tags to apply to all AWS resources created."
   default     = {}
 }
 
 variable "trusted_cidr_blocks" {
   type        = list(string)
-  description = "A list of the CIDR blocks outside the VPC that are allowed to access the IPA servers (e.g. [\"10.10.0.0/16\", \"10.11.0.0/16\"])"
+  description = "A list of the CIDR blocks outside the VPC that are allowed to access the IPA servers (e.g. [\"10.10.0.0/16\", \"10.11.0.0/16\"])."
   default     = []
 }
