@@ -10,7 +10,12 @@ output "private_subnet_nat_gw_ids" {
 
 output "private_subnet_private_reverse_zone_ids" {
   value       = zipmap(module.private_subnets.subnet_ids, aws_route53_zone.private_subnet_private_reverse_zones[*].zone_id)
-  description = "The zone IDs corresponding to the private Route53 reverse zones for the private subnets in the VPC"
+  description = "The zone IDs corresponding to the private Route53 reverse zones for the private subnets in the VPC."
+}
+
+output "private_zone_id" {
+  value       = aws_route53_zone.private_zone.zone_id
+  description = "The zone ID corresponding to the private Route53 zone for the VPC."
 }
 
 output "public_subnet_ids" {
