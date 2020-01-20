@@ -33,6 +33,11 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
+variable "cool_domain" {
+  description = "The domain where the COOL resources reside (e.g. \"cool.cyber.dhs.gov\")."
+  default     = "cool.cyber.dhs.gov"
+}
+
 variable "tags" {
   type        = map(string)
   description = "Tags to apply to all AWS resources created"
