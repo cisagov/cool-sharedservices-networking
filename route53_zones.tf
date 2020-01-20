@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------
-# Create a private Route53 zone.
+# Create a private Route53 zone for the VPC.
 #-------------------------------------------------------------------------------
 resource "aws_route53_zone" "private_zone" {
   name = var.cool_domain
@@ -10,7 +10,7 @@ resource "aws_route53_zone" "private_zone" {
 }
 
 #-------------------------------------------------------------------------------
-# Create private Route53 reverse zones.
+# Create private Route53 reverse zones for the VPC subnets.
 #-------------------------------------------------------------------------------
 resource "aws_route53_zone" "private_subnet_private_reverse_zones" {
   count = length(var.private_subnet_cidr_blocks)
@@ -42,13 +42,4 @@ resource "aws_route53_zone" "public_subnet_private_reverse_zones" {
   vpc {
     vpc_id = aws_vpc.the_vpc.id
   }
-}
-
-#-------------------------------------------------------------------------------
-# Create a data resource for the existing public Route53 zone.
-#-------------------------------------------------------------------------------
-data "aws_route53_zone" "public_zone" {
-  provider = aws.public_dns
-
-  name = var.public_zone_name
 }
