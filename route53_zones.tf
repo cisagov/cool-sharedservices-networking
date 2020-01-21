@@ -3,7 +3,7 @@
 #-------------------------------------------------------------------------------
 resource "aws_route53_zone" "private_zone" {
   name = var.cool_domain
-
+  tags = var.tags
   vpc {
     vpc_id = aws_vpc.the_vpc.id
   }
