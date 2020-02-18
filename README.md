@@ -1,6 +1,6 @@
-# cool-shared-services-networking #
+# cool-sharedservices-networking #
 
-[![GitHub Build Status](https://github.com/cisagov/cool-shared-services-networking/workflows/build/badge.svg)](https://github.com/cisagov/cool-shared-services-networking/actions)
+[![GitHub Build Status](https://github.com/cisagov/cool-sharedservices-networking/workflows/build/badge.svg)](https://github.com/cisagov/cool-sharedservices-networking/actions)
 
 This is a Terraform module for creating the VPC, public subnets, and
 private subnets for the COOL shared services environment.
@@ -9,7 +9,7 @@ private subnets for the COOL shared services environment.
 
 ```hcl
 module "example" {
-  source = "github.com/cisagov/cool-shared-services-networking"
+  source = "github.com/cisagov/cool-sharedservices-networking"
 
   aws_region                 = "us-west-1"
   cool_domain                = "cool.cyber.dhs.gov"
