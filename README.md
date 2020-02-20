@@ -5,6 +5,20 @@
 This is a Terraform deployment for creating the VPC, public subnets,
 and private subnets for the COOL Shared Services account.
 
+Since Terraform [does not yet support `depends_on` for
+modules](https://github.com/hashicorp/terraform/issues/17101), we have
+no way to ensure that the `ProvisionNetworking` policy is attached to
+the `ProvisionAccount` role before Terraform attempts to instantiate
+the subnet modules.  Therefore, in order to apply this Terraform code,
+one must run a targeted apply before running a full apply:
+
+```console
+terraform apply -var-file=<workspace>.tfvars -target=aws_iam_role_policy_attachment.provisionnetworking_policy_attachment
+```
+
+At this point the `ProvisionNetworking` policy is attached to the
+`ProvisionAccount` role and you can run a full `terraform apply`.
+
 ## Inputs ##
 
 | Name | Description | Type | Default | Required |
