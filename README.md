@@ -37,13 +37,13 @@ At this point the `ProvisionNetworking` policy is attached to the
 
 | Name | Description |
 |------|-------------|
-| private_subnet_ids | The subnets IDs corresponding to the private subnets in the VPC. |
-| private_subnet_nat_gw_ids | The IDs corresponding to the NAT gateways used in the private subnets in the VPC. |
-| private_subnet_private_reverse_zone_ids | The zone IDs corresponding to the private Route53 reverse zones for the private subnets in the VPC. |
-| private_zone_id | The zone ID corresponding to the private Route53 zone for the VPC. |
-| public_subnet_ids | The subnets IDs corresponding to the public subnets in the VPC. |
-| public_subnet_private_reverse_zone_ids | The zone IDs corresponding to the private Route53 reverse zones for the public subnets in the VPC. |
-| vpc_id | The ID corresponding to the shared services VPC. |
+| private_subnets | The private subnets in the VPC. |
+| private_subnet_nat_gws | The NAT gateways used in the private subnets in the VPC. |
+| private_subnet_private_reverse_zones | The private Route53 reverse zones for the private subnets in the VPC. |
+| private_zone | The private Route53 zone for the VPC. |
+| public_subnets | The public subnets in the VPC. |
+| public_subnet_private_reverse_zones | The private Route53 reverse zones for the public subnets in the VPC. |
+| vpc | The shared services VPC. |
 
 ## Contributing ##
 

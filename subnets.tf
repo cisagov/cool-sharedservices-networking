@@ -1,7 +1,7 @@
 #-------------------------------------------------------------------------------
 # Create the subnets for the shared services VPC.
 #-------------------------------------------------------------------------------
-module "public_subnets" {
+module "public" {
   source = "github.com/cisagov/distributed-subnets-tf-module"
   # We can't perform this action until our policy is in place.  Also,
   # Terraform doesn't yet allow depends_on for modules.
@@ -14,7 +14,7 @@ module "public_subnets" {
   tags               = var.tags
 }
 
-module "private_subnets" {
+module "private" {
   source = "github.com/cisagov/distributed-subnets-tf-module"
   # We can't perform this action until our policy is in place.  Also,
   # Terraform doesn't yet allow depends_on for modules.
@@ -31,25 +31,25 @@ module "private_subnets" {
 # Create NAT gateways for the private subnets.
 # -------------------------------------------------------------------------------
 resource "aws_eip" "nat_gw_eips" {
-  count = length(var.private_subnet_cidr_blocks)
   # We can't perform this action until our policy is in place.
   depends_on = [
     aws_iam_role_policy_attachment.provisionnetworking_policy_attachment
   ]
+  for_each = toset(var.private_subnet_cidr_blocks)
 
   tags = var.tags
   vpc  = true
 }
 
 resource "aws_nat_gateway" "nat_gws" {
-  count = length(var.private_subnet_cidr_blocks)
   # We can't perform this action until our policy is in place.
   depends_on = [
     aws_iam_role_policy_attachment.provisionnetworking_policy_attachment
   ]
+  for_each = toset(var.private_subnet_cidr_blocks)
 
-  allocation_id = aws_eip.nat_gw_eips[count.index].id
-  subnet_id     = module.private_subnets.subnet_ids[count.index]
+  allocation_id = aws_eip.nat_gw_eips[each.value].id
+  subnet_id     = module.private.subnets[each.value].id
   tags          = var.tags
 }
 
@@ -58,35 +58,35 @@ resource "aws_nat_gateway" "nat_gws" {
 # -------------------------------------------------------------------------------
 
 resource "aws_route_table" "private_subnet_route_tables" {
-  count = length(var.private_subnet_cidr_blocks)
   # We can't perform this action until our policy is in place.
   depends_on = [
     aws_iam_role_policy_attachment.provisionnetworking_policy_attachment
   ]
+  for_each = toset(var.private_subnet_cidr_blocks)
 
   tags   = var.tags
   vpc_id = aws_vpc.the_vpc.id
 }
 
 resource "aws_route" "private_subnet_route_tables" {
-  count = length(var.private_subnet_cidr_blocks)
   # We can't perform this action until our policy is in place.
   depends_on = [
     aws_iam_role_policy_attachment.provisionnetworking_policy_attachment
   ]
+  for_each = toset(var.private_subnet_cidr_blocks)
 
-  route_table_id         = aws_route_table.private_subnet_route_tables[count.index].id
+  route_table_id         = aws_route_table.private_subnet_route_tables[each.value].id
   destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = aws_nat_gateway.nat_gws[count.index].id
+  nat_gateway_id         = aws_nat_gateway.nat_gws[each.value].id
 }
 
 resource "aws_route_table_association" "private_subnet_route_table_associations" {
-  count = length(var.private_subnet_cidr_blocks)
   # We can't perform this action until our policy is in place.
   depends_on = [
     aws_iam_role_policy_attachment.provisionnetworking_policy_attachment
   ]
+  for_each = toset(var.private_subnet_cidr_blocks)
 
-  subnet_id      = module.private_subnets.subnet_ids[count.index]
-  route_table_id = aws_route_table.private_subnet_route_tables[count.index].id
+  subnet_id      = module.private.subnets[each.value].id
+  route_table_id = aws_route_table.private_subnet_route_tables[each.value].id
 }
