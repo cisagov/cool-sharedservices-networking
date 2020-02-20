@@ -4,6 +4,10 @@
 # You must provide a value for each of these parameters.
 # ------------------------------------------------------------------------------
 
+variable "cool_domain" {
+  description = "The domain where the COOL resources reside (e.g. \"cool.cyber.dhs.gov\")."
+}
+
 variable "private_subnet_cidr_blocks" {
   type        = list(string)
   description = "The CIDR blocks corresponding to the private subnets to be associated with the VPC (e.g. [\"10.10.0.0/24\", \"10.10.1.0/24\"]).  These must be /24 blocks, since we are using them to create reverse DNS zones."
@@ -12,10 +16,6 @@ variable "private_subnet_cidr_blocks" {
 variable "public_subnet_cidr_blocks" {
   type        = list(string)
   description = "The CIDR blocks corresponding to the public subnets to be associated with the VPC (e.g. [\"10.10.0.0/24\", \"10.10.1.0/24\"]).  These must be /24 blocks, since we are using them to create reverse DNS zones."
-}
-
-variable "terraform_role_arn" {
-  description = "The ARN of the role to assume when creating, modifying, or destroying resources via Terraform."
 }
 
 variable "vpc_cidr_block" {
@@ -33,9 +33,19 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
-variable "cool_domain" {
-  description = "The domain where the COOL resources reside (e.g. \"cool.cyber.dhs.gov\")."
-  default     = "cool.cyber.dhs.gov"
+variable "provisionaccount_role_name" {
+  description = "The name of the IAM role that allows sufficient permissions to provision all AWS resources in the Shared Services account."
+  default     = "ProvisionAccount"
+}
+
+variable "provisionnetworking_policy_description" {
+  description = "The description to associate with the IAM policy that allows provisioning of the networking layer in the Shared Services account."
+  default     = "Allows provisioning of the networking layer in the Shared Services account."
+}
+
+variable "provisionnetworking_policy_name" {
+  description = "The name to assign the IAM policy that allows provisioning of the networking layer in the Shared Services account."
+  default     = "ProvisionNetworking"
 }
 
 variable "tags" {
