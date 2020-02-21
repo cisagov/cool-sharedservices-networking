@@ -25,7 +25,7 @@ resource "aws_ram_resource_association" "tgw" {
 
 # Share the resource with the other accounts that are allowed to
 # access it
-resource "aws_ram_principal_association" "pas" {
+resource "aws_ram_principal_association" "tgw" {
   for_each = var.transit_gateway_account_ids
 
   principal          = each.value

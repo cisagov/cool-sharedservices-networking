@@ -39,7 +39,7 @@ output "transit_gateway_ram_resource" {
 }
 
 output "transit_gateway_principal_associations" {
-  value       = aws_ram_principal_association.pas
+  value       = aws_ram_principal_association.tgw
   description = "The RAM resource principal associations for the Transit Gateway that allows cross-VPC communication."
 }
 
