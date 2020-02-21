@@ -31,15 +31,3 @@ resource "aws_ram_principal_association" "pas" {
   principal          = each.value
   resource_share_arn = aws_ram_resource_share.tgw.id
 }
-
-# Attach our VPC to the Transit Gateway
-resource "aws_ec2_transit_gateway_vpc_attachment" "example" {
-  depends_on = [
-    aws_ram_resource_association.tgw
-  ]
-
-  subnet_ids         = [for cidr, subnet in module.private.subnets : subnet.id]
-  tags               = var.tags
-  transit_gateway_id = aws_ec2_transit_gateway.tgw.id
-  vpc_id             = aws_vpc.the_vpc.id
-}
