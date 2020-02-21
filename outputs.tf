@@ -28,6 +28,21 @@ output "public_subnet_private_reverse_zones" {
   description = "The private Route53 reverse zones for the public subnets in the VPC."
 }
 
+output "transit_gateway" {
+  value       = aws_ec2_transit_gateway.tgw
+  description = "The Transit Gateway that allows cross-VPC communication."
+}
+
+output "transit_gateway_ram_resource" {
+  value       = aws_ram_resource_association.tgw
+  description = "The RAM resource share associated with the Transit Gateway that allows cross-VPC communication."
+}
+
+output "transit_gateway_principal_associations" {
+  value       = aws_ram_principal_association.pas
+  description = "The RAM resource principal associations for the Transit Gateway that allows cross-VPC communication."
+}
+
 output "vpc" {
   value       = aws_vpc.the_vpc
   description = "The shared services VPC."
