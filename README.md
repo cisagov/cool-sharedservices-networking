@@ -13,7 +13,7 @@ the subnet modules.  Therefore, in order to apply this Terraform code,
 one must run a targeted apply before running a full apply:
 
 ```console
-terraform apply -var-file=<workspace>.tfvars -target=aws_iam_role_policy_attachment.provisionnetworking_policy_attachment
+terraform apply -var-file=<workspace>.tfvars -target=aws_iam_role_policy_attachment.provisionnetworking_policy_attachment -target=aws_iam_policy.provisionnetworking_policy
 ```
 
 At this point the `ProvisionNetworking` policy is attached to the
