@@ -1,13 +1,15 @@
 #-------------------------------------------------------------------------------
+# Note that all these resources depend on the VPC, the NAT GWs, or
+# both, and hence on the
+# aws_iam_role_policy_attachment.provisionnetworking_policy_attachment
+# resource.
+# -------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
 # Create the subnets for the shared services VPC.
 #-------------------------------------------------------------------------------
 module "public" {
   source = "github.com/cisagov/distributed-subnets-tf-module"
-  # We can't perform this action until our policy is in place.  Also,
-  # Terraform doesn't yet allow depends_on for modules.
-  # depends_on = [
-  #   aws_iam_role_policy_attachment.provisionnetworking_policy_attachment
-  # ]
 
   vpc_id             = aws_vpc.the_vpc.id
   subnet_cidr_blocks = var.public_subnet_cidr_blocks
@@ -16,11 +18,6 @@ module "public" {
 
 module "private" {
   source = "github.com/cisagov/distributed-subnets-tf-module"
-  # We can't perform this action until our policy is in place.  Also,
-  # Terraform doesn't yet allow depends_on for modules.
-  # depends_on = [
-  #   aws_iam_role_policy_attachment.provisionnetworking_policy_attachment
-  # ]
 
   vpc_id             = aws_vpc.the_vpc.id
   subnet_cidr_blocks = var.private_subnet_cidr_blocks
@@ -31,7 +28,8 @@ module "private" {
 # Create NAT gateways for the private subnets.
 # -------------------------------------------------------------------------------
 resource "aws_eip" "nat_gw_eips" {
-  # We can't perform this action until our policy is in place.
+  # We can't perform this action until our policy is in place, so we
+  # need this dependency.
   depends_on = [
     aws_iam_role_policy_attachment.provisionnetworking_policy_attachment
   ]
@@ -42,10 +40,6 @@ resource "aws_eip" "nat_gw_eips" {
 }
 
 resource "aws_nat_gateway" "nat_gws" {
-  # We can't perform this action until our policy is in place.
-  depends_on = [
-    aws_iam_role_policy_attachment.provisionnetworking_policy_attachment
-  ]
   for_each = toset(var.private_subnet_cidr_blocks)
 
   allocation_id = aws_eip.nat_gw_eips[each.value].id
@@ -58,21 +52,13 @@ resource "aws_nat_gateway" "nat_gws" {
 # -------------------------------------------------------------------------------
 
 resource "aws_route_table" "private_subnet_route_tables" {
-  # We can't perform this action until our policy is in place.
-  depends_on = [
-    aws_iam_role_policy_attachment.provisionnetworking_policy_attachment
-  ]
   for_each = toset(var.private_subnet_cidr_blocks)
 
   tags   = var.tags
   vpc_id = aws_vpc.the_vpc.id
 }
 
-resource "aws_route" "private_subnet_route_tables" {
-  # We can't perform this action until our policy is in place.
-  depends_on = [
-    aws_iam_role_policy_attachment.provisionnetworking_policy_attachment
-  ]
+resource "aws_route" "private_subnet_routes" {
   for_each = toset(var.private_subnet_cidr_blocks)
 
   route_table_id         = aws_route_table.private_subnet_route_tables[each.value].id
@@ -81,10 +67,6 @@ resource "aws_route" "private_subnet_route_tables" {
 }
 
 resource "aws_route_table_association" "private_subnet_route_table_associations" {
-  # We can't perform this action until our policy is in place.
-  depends_on = [
-    aws_iam_role_policy_attachment.provisionnetworking_policy_attachment
-  ]
   for_each = toset(var.private_subnet_cidr_blocks)
 
   subnet_id      = module.private.subnets[each.value].id
