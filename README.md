@@ -13,7 +13,7 @@ the subnet modules.  Therefore, in order to apply this Terraform code,
 one must run a targeted apply before running a full apply:
 
 ```console
-terraform apply -var-file=<workspace>.tfvars -target=aws_iam_role_policy_attachment.provisionnetworking_policy_attachment
+terraform apply -var-file=<workspace>.tfvars -target=aws_iam_role_policy_attachment.provisionnetworking_policy_attachment -target=aws_iam_policy.provisionnetworking_policy
 ```
 
 At this point the `ProvisionNetworking` policy is attached to the
@@ -24,12 +24,15 @@ At this point the `ProvisionNetworking` policy is attached to the
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-------:|:--------:|
 | aws_region | The AWS region to deploy into (e.g. us-east-1). | string | `us-east-1` | no |
+| cool_cidr_block | The overall CIDR block associated with the COOL (e.g. \"10.128.0.0/9\"). | string | | yes |
 | cool_domain | The domain where the COOL resources reside (e.g. "cool.cyber.dhs.gov"). | string | | yes |
 | private_subnet_cidr_blocks | The CIDR blocks corresponding to the private subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  These must be /24 blocks, since we are using them to create reverse DNS zones. | list(string) | | yes |
 | provisionaccount_role_name | The name of the IAM role that allows sufficient permissions to provision all AWS resources in the Shared Services account. | string | `ProvisionAccount` | no |
 | provisionnetworking_policy_description | The description to associate with the IAM policy that allows provisioning of the networking layer in the Shared Services account. | string | `Allows provisioning of the networking layer in the Shared Services account.` | no |
 | provisionnetworking_policy_name | The name to associate with the IAM policy that allows provisioning of the networking layer in the Shared Services account. | string | `ProvisionNetworking` | no |
 | public_subnet_cidr_blocks | The CIDR blocks corresponding to the public subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  These must be /24 blocks, since we are using them to create reverse DNS zones. | list(string) | | yes |
+| transit_gateway_account_ids | A map of account names and IDs that are allowed to use the Transit Gateway in the Shared Services account for cross-VPC communication. | map(string) | `{}` | no |
+| transit_gateway_description | The description to associate with the Transit Gateway in the Shared Services account that allows cross-VPC communication. | string | `The Transit Gateway in the Shared Services account that allows cross-VPC communication.` | no |
 | tags | Tags to apply to all AWS resources created. | map(string) | `{}` | no |
 | vpc_cidr_block | The overall CIDR block to be associated with the VPC (e.g. "10.10.0.0/16"). | string | | yes |
 
@@ -43,6 +46,9 @@ At this point the `ProvisionNetworking` policy is attached to the
 | private_zone | The private Route53 zone for the VPC. |
 | public_subnets | The public subnets in the VPC. |
 | public_subnet_private_reverse_zones | The private Route53 reverse zones for the public subnets in the VPC. |
+| transit_gateway | The Transit Gateway that allows cross-VPC communication. |
+| transit_gateway_ram_resource | The RAM resource share associated with the Transit Gateway that allows cross-VPC communication. |
+| transit_gateway_principal_associations | The RAM resource principal associations for the Transit Gateway that allows cross-VPC communication. |
 | vpc | The shared services VPC. |
 
 ## Contributing ##

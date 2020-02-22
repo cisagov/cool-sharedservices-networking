@@ -4,6 +4,10 @@
 # You must provide a value for each of these parameters.
 # ------------------------------------------------------------------------------
 
+variable "cool_cidr_block" {
+  description = "The overall CIDR block associated with the COOL (e.g. \"10.128.0.0/9\")."
+}
+
 variable "cool_domain" {
   description = "The domain where the COOL resources reside (e.g. \"cool.cyber.dhs.gov\")."
 }
@@ -52,4 +56,15 @@ variable "tags" {
   type        = map(string)
   description = "Tags to apply to all AWS resources created."
   default     = {}
+}
+
+variable "transit_gateway_account_ids" {
+  type        = map(string)
+  description = "A map of account names and IDs that are allowed to use the Transit Gateway in the Shared Services account for cross-VPC communication."
+  default     = {}
+}
+
+variable "transit_gateway_description" {
+  description = "The description to associate with the Transit Gateway in the Shared Services account that allows cross-VPC communication."
+  default     = "The Transit Gateway in the Shared Services account that allows cross-VPC communication."
 }
