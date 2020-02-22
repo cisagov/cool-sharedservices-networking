@@ -6,6 +6,12 @@
 # ------------------------------------------------------------------------------
 
 resource "aws_ec2_transit_gateway" "tgw" {
+  # We can't perform this action until our policy is in place, so we
+  # need this dependency.
+  depends_on = [
+    aws_iam_role_policy_attachment.provisionnetworking_policy_attachment
+  ]
+
   auto_accept_shared_attachments = "enable"
   description                    = var.transit_gateway_description
   tags                           = var.tags
@@ -14,6 +20,12 @@ resource "aws_ec2_transit_gateway" "tgw" {
 # Create a shared resource for the Transit Gateway.  See
 # https://aws.amazon.com/ram/ for more details about this.
 resource "aws_ram_resource_share" "tgw" {
+  # We can't perform this action until our policy is in place, so we
+  # need this dependency.
+  depends_on = [
+    aws_iam_role_policy_attachment.provisionnetworking_policy_attachment
+  ]
+
   allow_external_principals = true
   name                      = "SharedServices-TransitGateway"
   tags                      = var.tags
