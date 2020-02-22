@@ -46,29 +46,3 @@ resource "aws_nat_gateway" "nat_gws" {
   subnet_id     = module.private.subnets[each.value].id
   tags          = var.tags
 }
-
-#-------------------------------------------------------------------------------
-# Create appropriate routing tables for the private subnets.
-# -------------------------------------------------------------------------------
-
-resource "aws_route_table" "private_subnet_route_tables" {
-  for_each = toset(var.private_subnet_cidr_blocks)
-
-  tags   = var.tags
-  vpc_id = aws_vpc.the_vpc.id
-}
-
-resource "aws_route" "private_subnet_routes" {
-  for_each = toset(var.private_subnet_cidr_blocks)
-
-  route_table_id         = aws_route_table.private_subnet_route_tables[each.value].id
-  destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = aws_nat_gateway.nat_gws[each.value].id
-}
-
-resource "aws_route_table_association" "private_subnet_route_table_associations" {
-  for_each = toset(var.private_subnet_cidr_blocks)
-
-  subnet_id      = module.private.subnets[each.value].id
-  route_table_id = aws_route_table.private_subnet_route_tables[each.value].id
-}

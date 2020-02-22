@@ -4,6 +4,10 @@
 # You must provide a value for each of these parameters.
 # ------------------------------------------------------------------------------
 
+variable "cool_cidr_block" {
+  description = "The overall CIDR block associated with the COOL (e.g. \"10.128.0.0/9\")."
+}
+
 variable "cool_domain" {
   description = "The domain where the COOL resources reside (e.g. \"cool.cyber.dhs.gov\")."
 }
