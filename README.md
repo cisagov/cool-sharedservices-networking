@@ -24,6 +24,7 @@ At this point the `ProvisionNetworking` policy is attached to the
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-------:|:--------:|
 | aws_region | The AWS region to deploy into (e.g. us-east-1). | string | `us-east-1` | no |
+| cool_cidr_block | The overall CIDR block associated with the COOL (e.g. \"10.128.0.0/9\"). | string | | yes |
 | cool_domain | The domain where the COOL resources reside (e.g. "cool.cyber.dhs.gov"). | string | | yes |
 | private_subnet_cidr_blocks | The CIDR blocks corresponding to the private subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  These must be /24 blocks, since we are using them to create reverse DNS zones. | list(string) | | yes |
 | provisionaccount_role_name | The name of the IAM role that allows sufficient permissions to provision all AWS resources in the Shared Services account. | string | `ProvisionAccount` | no |
