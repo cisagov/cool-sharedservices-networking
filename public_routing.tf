@@ -13,7 +13,7 @@ resource "aws_default_route_table" "public" {
 }
 
 # Route all non-local COOL (outside this VPC but inside the COOL)
-# traffic this VPC through the transit gateway
+# traffic through the transit gateway
 resource "aws_route" "cool_route" {
   route_table_id         = aws_default_route_table.public.id
   destination_cidr_block = var.cool_cidr_block

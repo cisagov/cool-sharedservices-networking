@@ -22,7 +22,7 @@ resource "aws_route_table" "private_route_tables" {
 }
 
 # Route all non-local COOL (outside this VPC but inside the COOL)
-# traffic this VPC through the transit gateway.
+# traffic through the transit gateway.
 resource "aws_route" "cool_routes" {
   for_each = toset(var.private_subnet_cidr_blocks)
 
