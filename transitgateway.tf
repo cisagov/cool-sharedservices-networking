@@ -37,8 +37,12 @@ resource "aws_ram_resource_association" "tgw" {
 
 # Share the resource with the other accounts that are allowed to
 # access it
+data "aws_organizations_organization" "cool" {
+  provider = aws.organizationsreadonly
+}
+
 resource "aws_ram_principal_association" "tgw" {
-  for_each = var.transit_gateway_account_ids
+  for_each = { for account in data.aws_organizations_organization.cool.accounts : account.name => account.id if substr(account.name, 0, 3) == "env" }
 
   principal          = each.value
   resource_share_arn = aws_ram_resource_share.tgw.id
