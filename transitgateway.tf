@@ -36,11 +36,10 @@ resource "aws_ram_resource_association" "tgw" {
 }
 
 # Share the resource with the other accounts that are allowed to
-# access it
+# access it (currently the env* accounts)
 data "aws_organizations_organization" "cool" {
   provider = aws.organizationsreadonly
 }
-
 resource "aws_ram_principal_association" "tgw" {
   for_each = { for account in data.aws_organizations_organization.cool.accounts : account.name => account.id if substr(account.name, 0, 3) == "env" }
 
