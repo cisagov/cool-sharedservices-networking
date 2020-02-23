@@ -31,7 +31,6 @@ At this point the `ProvisionNetworking` policy is attached to the
 | provisionnetworking_policy_description | The description to associate with the IAM policy that allows provisioning of the networking layer in the Shared Services account. | string | `Allows provisioning of the networking layer in the Shared Services account.` | no |
 | provisionnetworking_policy_name | The name to associate with the IAM policy that allows provisioning of the networking layer in the Shared Services account. | string | `ProvisionNetworking` | no |
 | public_subnet_cidr_blocks | The CIDR blocks corresponding to the public subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  These must be /24 blocks, since we are using them to create reverse DNS zones. | list(string) | | yes |
-| transit_gateway_account_ids | A map of account names and IDs that are allowed to use the Transit Gateway in the Shared Services account for cross-VPC communication. | map(string) | `{}` | no |
 | transit_gateway_description | The description to associate with the Transit Gateway in the Shared Services account that allows cross-VPC communication. | string | `The Transit Gateway in the Shared Services account that allows cross-VPC communication.` | no |
 | tags | Tags to apply to all AWS resources created. | map(string) | `{}` | no |
 | vpc_cidr_block | The overall CIDR block to be associated with the VPC (e.g. "10.10.0.0/16"). | string | | yes |
