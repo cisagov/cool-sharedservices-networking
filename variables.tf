@@ -58,12 +58,6 @@ variable "tags" {
   default     = {}
 }
 
-variable "transit_gateway_account_ids" {
-  type        = map(string)
-  description = "A map of account names and IDs that are allowed to use the Transit Gateway in the Shared Services account for cross-VPC communication."
-  default     = {}
-}
-
 variable "transit_gateway_description" {
   description = "The description to associate with the Transit Gateway in the Shared Services account that allows cross-VPC communication."
   default     = "The Transit Gateway in the Shared Services account that allows cross-VPC communication."
