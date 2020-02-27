@@ -43,6 +43,6 @@ resource "aws_nat_gateway" "nat_gws" {
   for_each = toset(var.private_subnet_cidr_blocks)
 
   allocation_id = aws_eip.nat_gw_eips[each.value].id
-  subnet_id     = module.private.subnets[each.value].id
+  subnet_id     = module.public.subnets[var.public_subnet_cidr_blocks[index(var.private_subnet_cidr_blocks, each.value)]].id
   tags          = var.tags
 }
