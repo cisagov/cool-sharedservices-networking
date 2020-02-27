@@ -43,6 +43,19 @@ resource "aws_nat_gateway" "nat_gws" {
   for_each = toset(var.private_subnet_cidr_blocks)
 
   allocation_id = aws_eip.nat_gw_eips[each.value].id
-  subnet_id     = module.private.subnets[each.value].id
-  tags          = var.tags
+  # Note that each.value is a *private* subnet CIDR block, but we need
+  # to look up the public subnet where the NAT GW should be deployed
+  # using a *public* subnet CIDR block.  Thus we look up the index of
+  # each.value in var.private_subnet_cidr_blocks and use that index to
+  # extract a corresponding public subnet from
+  # var.public_subnet_cidr_blocks.
+  #
+  # Note that, because of the way
+  # https://github.com/cisagov/distributed-subnets-tf-module works,
+  # the public subnet selected here will be in the same AZ as the
+  # private subnet corresponding to each.value.  Thus we have N
+  # private subnets, each of which is using a NAT GW in a public
+  # subnet in the same AZ.
+  subnet_id = module.public.subnets[var.public_subnet_cidr_blocks[index(var.private_subnet_cidr_blocks, each.value)]].id
+  tags      = var.tags
 }
