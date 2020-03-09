@@ -39,6 +39,8 @@ At this point the `ProvisionNetworking` policy is attached to the
 
 | Name | Description |
 |------|-------------|
+| default_route_table | The default route table for the VPC, which is used by the public subnets. |
+| private_route_tables | The route tables used by the private subnets in the VPC. |
 | private_subnets | The private subnets in the VPC. |
 | private_subnet_nat_gws | The NAT gateways used in the private subnets in the VPC. |
 | private_subnet_private_reverse_zones | The private Route53 reverse zones for the private subnets in the VPC. |

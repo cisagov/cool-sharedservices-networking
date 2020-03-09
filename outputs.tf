@@ -1,3 +1,13 @@
+output "default_route_table" {
+  value       = aws_default_route_table.public
+  description = "The default route table for the VPC, which is used by the public subnets."
+}
+
+output "private_route_tables" {
+  value       = aws_route_table.private_route_tables
+  description = "The route tables used by the private subnets in the VPC."
+}
+
 output "private_subnets" {
   value       = module.private.subnets
   description = "The private subnets in the VPC."
@@ -5,7 +15,7 @@ output "private_subnets" {
 
 output "private_subnet_nat_gws" {
   value       = aws_nat_gateway.nat_gws
-  description = "The the NAT gateways used in the private subnets in the VPC."
+  description = "The NAT gateways used in the private subnets in the VPC."
 }
 
 output "private_subnet_private_reverse_zones" {
