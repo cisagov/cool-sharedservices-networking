@@ -1,3 +1,13 @@
+output "default_route_table" {
+  value       = aws_default_route_table.public
+  description = "The default route table for the VPC, which is used by the public subnets."
+}
+
+output "private_route_tables" {
+  value       = aws_route_table.private_route_tables
+  description = "The route tables used by the private subnets in the VPC."
+}
+
 output "private_subnets" {
   value       = module.private.subnets
   description = "The private subnets in the VPC."
