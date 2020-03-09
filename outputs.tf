@@ -15,7 +15,7 @@ output "private_subnets" {
 
 output "private_subnet_nat_gws" {
   value       = aws_nat_gateway.nat_gws
-  description = "The the NAT gateways used in the private subnets in the VPC."
+  description = "The NAT gateways used in the private subnets in the VPC."
 }
 
 output "private_subnet_private_reverse_zones" {
