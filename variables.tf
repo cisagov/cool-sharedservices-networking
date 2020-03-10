@@ -5,10 +5,12 @@
 # ------------------------------------------------------------------------------
 
 variable "cool_cidr_block" {
+  type        = string
   description = "The overall CIDR block associated with the COOL (e.g. \"10.128.0.0/9\")."
 }
 
 variable "cool_domain" {
+  type        = string
   description = "The domain where the COOL resources reside (e.g. \"cool.cyber.dhs.gov\")."
 }
 
@@ -23,6 +25,7 @@ variable "public_subnet_cidr_blocks" {
 }
 
 variable "vpc_cidr_block" {
+  type        = string
   description = "The overall CIDR block to be associated with the VPC (e.g. \"10.10.0.0/16\")."
 }
 
@@ -33,21 +36,25 @@ variable "vpc_cidr_block" {
 # ------------------------------------------------------------------------------
 
 variable "aws_region" {
+  type        = string
   description = "The AWS region where the shared services account is to be created (e.g. \"us-east-1\")."
   default     = "us-east-1"
 }
 
 variable "provisionaccount_role_name" {
+  type        = string
   description = "The name of the IAM role that allows sufficient permissions to provision all AWS resources in the Shared Services account."
   default     = "ProvisionAccount"
 }
 
 variable "provisionnetworking_policy_description" {
+  type        = string
   description = "The description to associate with the IAM policy that allows provisioning of the networking layer in the Shared Services account."
   default     = "Allows provisioning of the networking layer in the Shared Services account."
 }
 
 variable "provisionnetworking_policy_name" {
+  type        = string
   description = "The name to assign the IAM policy that allows provisioning of the networking layer in the Shared Services account."
   default     = "ProvisionNetworking"
 }
@@ -59,6 +66,7 @@ variable "tags" {
 }
 
 variable "transit_gateway_description" {
+  type        = string
   description = "The description to associate with the Transit Gateway in the Shared Services account that allows cross-VPC communication."
   default     = "The Transit Gateway in the Shared Services account that allows cross-VPC communication."
 }
