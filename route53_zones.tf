@@ -6,6 +6,10 @@
 # resource.
 # -------------------------------------------------------------------------------
 resource "aws_route53_zone" "private_zone" {
+  lifecycle {
+    ignore_changes = [vpc]
+  }
+
   name = var.cool_domain
   tags = var.tags
   vpc {
@@ -18,6 +22,9 @@ resource "aws_route53_zone" "private_zone" {
 #-------------------------------------------------------------------------------
 resource "aws_route53_zone" "private_subnet_private_reverse_zones" {
   for_each = toset(var.private_subnet_cidr_blocks)
+  lifecycle {
+    ignore_changes = [vpc]
+  }
 
   # Note that this code assumes that we are using /24 blocks.
   name = format(
@@ -34,6 +41,9 @@ resource "aws_route53_zone" "private_subnet_private_reverse_zones" {
 
 resource "aws_route53_zone" "public_subnet_private_reverse_zones" {
   for_each = toset(var.public_subnet_cidr_blocks)
+  lifecycle {
+    ignore_changes = [vpc]
+  }
 
   # Note that this code assumes that we are using /24 blocks.
   name = format(
