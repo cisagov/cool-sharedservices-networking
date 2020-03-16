@@ -17,8 +17,10 @@ resource "aws_ec2_transit_gateway" "tgw" {
   tags                           = var.tags
 }
 
+#
 # Create a shared resource for the Transit Gateway.  See
 # https://aws.amazon.com/ram/ for more details about this.
+#
 resource "aws_ram_resource_share" "tgw" {
   # We can't perform this action until our policy is in place, so we
   # need this dependency.
@@ -35,14 +37,43 @@ resource "aws_ram_resource_association" "tgw" {
   resource_share_arn = aws_ram_resource_share.tgw.id
 }
 
+#
 # Share the resource with the other accounts that are allowed to
-# access it (currently the env* accounts)
+# access it (currently the env* accounts).
+#
 data "aws_organizations_organization" "cool" {
   provider = aws.organizationsreadonly
 }
+locals {
+  accounts = set([for account in data.aws_organizations_organization.cool.accounts : account.id if substr(account.name, 0, 3) == "env"])
+}
 resource "aws_ram_principal_association" "tgw" {
-  for_each = { for account in data.aws_organizations_organization.cool.accounts : account.name => account.id if substr(account.name, 0, 3) == "env" }
+  for_each = local.accounts
 
   principal          = each.value
   resource_share_arn = aws_ram_resource_share.tgw.id
 }
+
+#
+# Create a route table for each account that is allowed to attach to
+# the Transit Gateway.  Each of these route tables only allows traffic
+# to flow between the shared services VPC and the account that is
+# allowed to attach to the Transit Gateway.  This way the accounts are
+# isolated from each other.
+#
+resource "aws_ec2_transit_gateway_route_table" "tgw_attachments" {
+  for_each = local.accounts
+
+  transit_gateway_id = aws_ec2_transit_gateway.tgw.id
+}
+# Add routes to Shared Services to the route tables
+resource "aws_ec2_transit_gateway_route" "sharedservices_routes" {
+  for_each = local.accounts
+
+  destination_cidr_block         = aws_vpc.the_vpc.cidr_block
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.tgw.id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_attachments.id
+}
+# The routes to the individual accounts are added at the time of
+# attachment.  The TGW attachment ID and CIDR block are required, and
+# we don't have that information here.

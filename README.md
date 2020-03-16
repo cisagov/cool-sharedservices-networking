@@ -48,6 +48,7 @@ At this point the `ProvisionNetworking` policy is attached to the
 | public_subnets | The public subnets in the VPC. |
 | public_subnet_private_reverse_zones | The private Route53 reverse zones for the public subnets in the VPC. |
 | transit_gateway | The Transit Gateway that allows cross-VPC communication. |
+| transit_gateway_attachment_route_tables | Transit Gateway route tables for each of the accounts that are allowed to attach to the Transit Gateway.  These route tables ensure that these accounts can communicate with the Shared Services account but are isolated from each other. |
 | transit_gateway_ram_resource | The RAM resource share associated with the Transit Gateway that allows cross-VPC communication. |
 | transit_gateway_principal_associations | The RAM resource principal associations for the Transit Gateway that allows cross-VPC communication. |
 | vpc | The shared services VPC. |
