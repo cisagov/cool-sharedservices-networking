@@ -72,7 +72,7 @@ resource "aws_ec2_transit_gateway_route" "sharedservices_routes" {
 
   destination_cidr_block         = aws_vpc.the_vpc.cidr_block
   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.tgw.id
-  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_attachments.id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_attachments[each.value].id
 }
 # The routes to the individual accounts are added at the time of
 # attachment.  The TGW attachment ID and CIDR block are required, and
