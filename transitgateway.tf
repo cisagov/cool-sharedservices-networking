@@ -45,7 +45,7 @@ data "aws_organizations_organization" "cool" {
   provider = aws.organizationsreadonly
 }
 locals {
-  accounts = set([for account in data.aws_organizations_organization.cool.accounts : account.id if substr(account.name, 0, 3) == "env"])
+  accounts = toset([for account in data.aws_organizations_organization.cool.accounts : account.id if substr(account.name, 0, 3) == "env"])
 }
 resource "aws_ram_principal_association" "tgw" {
   for_each = local.accounts
