@@ -43,6 +43,11 @@ output "transit_gateway" {
   description = "The Transit Gateway that allows cross-VPC communication."
 }
 
+output "transit_gateway_attachment_route_tables" {
+  value       = aws_ec2_transit_gateway_route_table.tgw_attachments
+  description = "Transit Gateway route tables for each of the accounts that are allowed to attach to the Transit Gateway.  These route tables ensure that these accounts can communicate with the Shared Services account but are isolated from each other."
+}
+
 output "transit_gateway_ram_resource" {
   value       = aws_ram_resource_association.tgw
   description = "The RAM resource share associated with the Transit Gateway that allows cross-VPC communication."
