@@ -44,13 +44,37 @@ resource "aws_ram_resource_association" "tgw" {
 data "aws_organizations_organization" "cool" {
   provider = aws.organizationsreadonly
 }
+data "aws_caller_identity" "main" {
+}
 locals {
-  accounts = toset([for account in data.aws_organizations_organization.cool.accounts : account.id if substr(account.name, 0, 3) == "env"])
+  # Get Shared Services account ID from the main provider
+  this_account_id = data.aws_caller_identity.main.account_id
+
+  # Look up Shared Services account name from AWS organizations
+  # provider
+  this_account_name = [
+    for account in data.aws_organizations_organization.cool.accounts :
+    account.name
+    if account.id == local.this_account_id
+  ][0]
+
+  # Determine Shared Services account type based on account name.
+  #
+  # The account name format is "ACCOUNT_NAME (ACCOUNT_TYPE)" - for
+  # example, "Shared Services (Production)".
+  this_account_type = length(regexall("\\(([^()]*)\\)", local.this_account_name)) == 1 ? regex("\\(([^()]*)\\)", local.this_account_name)[0] : "Unknown"
+
+  # Determine the env* accounts of the same type
+  env_accounts_same_type = {
+    for account in data.aws_organizations_organization.cool.accounts :
+    account.id => account.name
+    if length(regexall("env[0-9]+ \\((${local.this_account_type})\\)", account.name)) > 0
+  }
 }
 resource "aws_ram_principal_association" "tgw" {
-  for_each = local.accounts
+  for_each = local.env_accounts_same_type
 
-  principal          = each.value
+  principal          = each.key
   resource_share_arn = aws_ram_resource_share.tgw.id
 }
 
@@ -62,17 +86,17 @@ resource "aws_ram_principal_association" "tgw" {
 # isolated from each other.
 #
 resource "aws_ec2_transit_gateway_route_table" "tgw_attachments" {
-  for_each = local.accounts
+  for_each = local.env_accounts_same_type
 
   transit_gateway_id = aws_ec2_transit_gateway.tgw.id
 }
 # Add routes to Shared Services to the route tables
 resource "aws_ec2_transit_gateway_route" "sharedservices_routes" {
-  for_each = local.accounts
+  for_each = local.env_accounts_same_type
 
   destination_cidr_block         = aws_vpc.the_vpc.cidr_block
   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.tgw.id
-  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_attachments[each.value].id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgw_attachments[each.key].id
 }
 # The routes to the individual accounts are added at the time of
 # attachment.  The TGW attachment ID and CIDR block are required, and
