@@ -63,6 +63,29 @@ data "aws_iam_policy_document" "provisionnetworking_policy_doc" {
       "*",
     ]
   }
+
+  statement {
+    actions = [
+      "logs:CreateLogGroup",
+      "logs:DescribeLogGroups",
+    ]
+
+    resources = [
+      "*"
+    ]
+  }
+
+  statement {
+    actions = [
+      "logs:DeleteLogGroup",
+      "logs:ListTagsLogGroup",
+      "logs:PutRetentionPolicy",
+    ]
+
+    resources = [
+      "arn:aws:logs:${var.aws_region}:${local.this_account_id}:log-group:vpc-flow-logs-sharedservices",
+    ]
+  }
 }
 
 resource "aws_iam_policy" "provisionnetworking_policy" {
