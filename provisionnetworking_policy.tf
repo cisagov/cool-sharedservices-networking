@@ -9,6 +9,7 @@ data "aws_iam_policy_document" "provisionnetworking_policy_doc" {
       "ec2:AllocateAddress",
       "ec2:AssociateRouteTable",
       "ec2:AttachInternetGateway",
+      "ec2:CreateFlowLogs",
       "ec2:CreateInternetGateway",
       "ec2:CreateNatGateway",
       "ec2:CreateNetworkAcl",
@@ -41,6 +42,7 @@ data "aws_iam_policy_document" "provisionnetworking_policy_doc" {
       "ec2:GetTransitGatewayRouteTablePropagations",
       "ec2:ModifyVpcAttribute",
       "ec2:ReleaseAddress",
+      "ec2:ReplaceRoute",
       "ec2:SearchTransitGatewayRoutes",
       "ram:AssociateResourceShare",
       "ram:CreateResourceShare",
@@ -84,6 +86,7 @@ data "aws_iam_policy_document" "provisionnetworking_policy_doc" {
 
     resources = [
       "arn:aws:logs:${var.aws_region}:${local.this_account_id}:log-group:vpc-flow-logs-sharedservices",
+      "arn:aws:logs:${var.aws_region}:${local.this_account_id}:log-group:vpc-flow-logs-sharedservices:log-stream:",
     ]
   }
 }
