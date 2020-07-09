@@ -85,8 +85,8 @@ data "aws_iam_policy_document" "provisionnetworking_policy_doc" {
     ]
 
     resources = [
-      "arn:aws:logs:${var.aws_region}:${local.this_account_id}:log-group:vpc-flow-logs-sharedservices",
-      "arn:aws:logs:${var.aws_region}:${local.this_account_id}:log-group:vpc-flow-logs-sharedservices:log-stream:",
+      "arn:aws:logs:${var.aws_region}:${local.sharedservices_account_id}:log-group:vpc-flow-logs-sharedservices",
+      "arn:aws:logs:${var.aws_region}:${local.sharedservices_account_id}:log-group:vpc-flow-logs-sharedservices:log-stream:",
     ]
   }
 }
