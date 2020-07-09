@@ -3,6 +3,8 @@
 #-------------------------------------------------------------------------------
 
 resource "aws_vpc" "the_vpc" {
+  provider = aws.sharedservicesprovisionaccount
+
   # We can't perform this action until our policy is in place, so we
   # need this dependency.  Since the other resources in this file
   # directly or indirectly depend on the VPC, making the VPC depend on
@@ -19,12 +21,16 @@ resource "aws_vpc" "the_vpc" {
 
 # The internet gateway for the VPC
 resource "aws_internet_gateway" "the_igw" {
+  provider = aws.sharedservicesprovisionaccount
+
   vpc_id = aws_vpc.the_vpc.id
   tags   = var.tags
 }
 
 # Attach the VPC to the Transit Gateway
 resource "aws_ec2_transit_gateway_vpc_attachment" "tgw" {
+  provider = aws.sharedservicesprovisionaccount
+
   depends_on = [
     aws_ram_resource_association.tgw
   ]

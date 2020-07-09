@@ -6,6 +6,8 @@
 # ------------------------------------------------------------------------------
 
 resource "aws_ec2_transit_gateway" "tgw" {
+  provider = aws.sharedservicesprovisionaccount
+
   # We can't perform this action until our policy is in place, so we
   # need this dependency.
   depends_on = [
@@ -22,6 +24,8 @@ resource "aws_ec2_transit_gateway" "tgw" {
 # https://aws.amazon.com/ram/ for more details about this.
 #
 resource "aws_ram_resource_share" "tgw" {
+  provider = aws.sharedservicesprovisionaccount
+
   # We can't perform this action until our policy is in place, so we
   # need this dependency.
   depends_on = [
@@ -33,6 +37,8 @@ resource "aws_ram_resource_share" "tgw" {
   tags                      = var.tags
 }
 resource "aws_ram_resource_association" "tgw" {
+  provider = aws.sharedservicesprovisionaccount
+
   resource_arn       = aws_ec2_transit_gateway.tgw.arn
   resource_share_arn = aws_ram_resource_share.tgw.id
 }
@@ -42,6 +48,8 @@ resource "aws_ram_resource_association" "tgw" {
 # access it (currently the env* accounts).
 #
 resource "aws_ram_principal_association" "tgw" {
+  provider = aws.sharedservicesprovisionaccount
+
   for_each = local.env_accounts_same_type
 
   principal          = each.key
@@ -56,12 +64,16 @@ resource "aws_ram_principal_association" "tgw" {
 # isolated from each other.
 #
 resource "aws_ec2_transit_gateway_route_table" "tgw_attachments" {
+  provider = aws.sharedservicesprovisionaccount
+
   for_each = local.env_accounts_same_type
 
   transit_gateway_id = aws_ec2_transit_gateway.tgw.id
 }
 # Add routes to Shared Services to the route tables
 resource "aws_ec2_transit_gateway_route" "sharedservices_routes" {
+  provider = aws.sharedservicesprovisionaccount
+
   for_each = local.env_accounts_same_type
 
   destination_cidr_block         = aws_vpc.the_vpc.cidr_block

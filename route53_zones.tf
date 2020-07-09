@@ -6,6 +6,8 @@
 # resource.
 # -------------------------------------------------------------------------------
 resource "aws_route53_zone" "private_zone" {
+  provider = aws.sharedservicesprovisionaccount
+
   lifecycle {
     ignore_changes = [vpc]
   }
@@ -21,6 +23,8 @@ resource "aws_route53_zone" "private_zone" {
 # Create private Route53 reverse zones for the VPC subnets.
 #-------------------------------------------------------------------------------
 resource "aws_route53_zone" "private_subnet_private_reverse_zones" {
+  provider = aws.sharedservicesprovisionaccount
+
   for_each = toset(var.private_subnet_cidr_blocks)
   lifecycle {
     ignore_changes = [vpc]
@@ -40,6 +44,8 @@ resource "aws_route53_zone" "private_subnet_private_reverse_zones" {
 }
 
 resource "aws_route53_zone" "public_subnet_private_reverse_zones" {
+  provider = aws.sharedservicesprovisionaccount
+
   for_each = toset(var.public_subnet_cidr_blocks)
   lifecycle {
     ignore_changes = [vpc]

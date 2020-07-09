@@ -8,6 +8,8 @@
 
 # Default route table (used by public subnets)
 resource "aws_default_route_table" "public" {
+  provider = aws.sharedservicesprovisionaccount
+
   default_route_table_id = aws_vpc.the_vpc.default_route_table_id
   tags                   = var.tags
 }
@@ -15,6 +17,8 @@ resource "aws_default_route_table" "public" {
 # Route all non-local COOL (outside this VPC but inside the COOL)
 # traffic through the transit gateway
 resource "aws_route" "cool_route" {
+  provider = aws.sharedservicesprovisionaccount
+
   route_table_id         = aws_default_route_table.public.id
   destination_cidr_block = var.cool_cidr_block
   transit_gateway_id     = aws_ec2_transit_gateway.tgw.id
@@ -23,6 +27,8 @@ resource "aws_route" "cool_route" {
 # Route all external (outside this VPC and outside the COOL) traffic
 # through the internet gateway
 resource "aws_route" "external_route" {
+  provider = aws.sharedservicesprovisionaccount
+
   route_table_id         = aws_default_route_table.public.id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_internet_gateway.the_igw.id

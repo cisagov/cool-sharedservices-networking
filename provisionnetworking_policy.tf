@@ -92,6 +92,8 @@ data "aws_iam_policy_document" "provisionnetworking_policy_doc" {
 }
 
 resource "aws_iam_policy" "provisionnetworking_policy" {
+  provider = aws.sharedservicesprovisionaccount
+
   description = var.provisionnetworking_policy_description
   name        = var.provisionnetworking_policy_name
   policy      = data.aws_iam_policy_document.provisionnetworking_policy_doc.json
