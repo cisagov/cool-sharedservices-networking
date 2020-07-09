@@ -41,36 +41,6 @@ resource "aws_ram_resource_association" "tgw" {
 # Share the resource with the other accounts that are allowed to
 # access it (currently the env* accounts).
 #
-data "aws_organizations_organization" "cool" {
-  provider = aws.organizationsreadonly
-}
-data "aws_caller_identity" "main" {
-}
-locals {
-  # Get Shared Services account ID from the main provider
-  this_account_id = data.aws_caller_identity.main.account_id
-
-  # Look up Shared Services account name from AWS organizations
-  # provider
-  this_account_name = [
-    for account in data.aws_organizations_organization.cool.accounts :
-    account.name
-    if account.id == local.this_account_id
-  ][0]
-
-  # Determine Shared Services account type based on account name.
-  #
-  # The account name format is "ACCOUNT_NAME (ACCOUNT_TYPE)" - for
-  # example, "Shared Services (Production)".
-  this_account_type = length(regexall("\\(([^()]*)\\)", local.this_account_name)) == 1 ? regex("\\(([^()]*)\\)", local.this_account_name)[0] : "Unknown"
-
-  # Determine the env* accounts of the same type
-  env_accounts_same_type = {
-    for account in data.aws_organizations_organization.cool.accounts :
-    account.id => account.name
-    if length(regexall("env[0-9]+ \\((${local.this_account_type})\\)", account.name)) > 0
-  }
-}
 resource "aws_ram_principal_association" "tgw" {
   for_each = local.env_accounts_same_type
 
