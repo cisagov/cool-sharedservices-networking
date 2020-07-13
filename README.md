@@ -23,11 +23,11 @@ At this point the `ProvisionNetworking` policy is attached to the
 
 - [Terraform](https://www.terraform.io/) installed on your system.
 - An accessible AWS S3 bucket to store Terraform state
-  (specified [here](backend.tf)).
+  (specified in [backend.tf](backend.tf)).
 - An accessible AWS DynamoDB database to store the Terraform state lock
-  (specified [here](backend.tf)).
+  (specified in [backend.tf](backend.tf)).
 - Access to all of the Terraform remote states specified in
-  [the remote states file](remote_states.tf).
+  [remote_states.tf](remote_states.tf).
 
 ## Requirements ##
 
