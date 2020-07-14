@@ -10,6 +10,9 @@
 #-------------------------------------------------------------------------------
 module "public" {
   source = "github.com/cisagov/distributed-subnets-tf-module"
+  providers = {
+    aws = aws.sharedservicesprovisionaccount
+  }
 
   vpc_id             = aws_vpc.the_vpc.id
   subnet_cidr_blocks = var.public_subnet_cidr_blocks
@@ -18,6 +21,9 @@ module "public" {
 
 module "private" {
   source = "github.com/cisagov/distributed-subnets-tf-module"
+  providers = {
+    aws = aws.sharedservicesprovisionaccount
+  }
 
   vpc_id             = aws_vpc.the_vpc.id
   subnet_cidr_blocks = var.private_subnet_cidr_blocks
@@ -28,6 +34,8 @@ module "private" {
 # Create NAT gateways for the private subnets.
 # -------------------------------------------------------------------------------
 resource "aws_eip" "nat_gw_eips" {
+  provider = aws.sharedservicesprovisionaccount
+
   # We can't perform this action until our policy is in place, so we
   # need this dependency.
   depends_on = [
@@ -40,6 +48,8 @@ resource "aws_eip" "nat_gw_eips" {
 }
 
 resource "aws_nat_gateway" "nat_gws" {
+  provider = aws.sharedservicesprovisionaccount
+
   for_each = toset(var.private_subnet_cidr_blocks)
 
   allocation_id = aws_eip.nat_gw_eips[each.value].id

@@ -15,6 +15,8 @@
 # Each private subnet gets its own routing table, since each subnet
 # uses its own NAT gateway.
 resource "aws_route_table" "private_route_tables" {
+  provider = aws.sharedservicesprovisionaccount
+
   for_each = toset(var.private_subnet_cidr_blocks)
 
   tags   = var.tags
@@ -24,6 +26,8 @@ resource "aws_route_table" "private_route_tables" {
 # Route all non-local COOL (outside this VPC but inside the COOL)
 # traffic through the transit gateway.
 resource "aws_route" "cool_routes" {
+  provider = aws.sharedservicesprovisionaccount
+
   for_each = toset(var.private_subnet_cidr_blocks)
 
   route_table_id         = aws_route_table.private_route_tables[each.value].id
@@ -34,6 +38,8 @@ resource "aws_route" "cool_routes" {
 # Route all external (outside this VPC and outside the COOL) traffic
 # through the NAT gateways
 resource "aws_route" "external_routes" {
+  provider = aws.sharedservicesprovisionaccount
+
   for_each = toset(var.private_subnet_cidr_blocks)
 
   route_table_id         = aws_route_table.private_route_tables[each.value].id
@@ -43,6 +49,8 @@ resource "aws_route" "external_routes" {
 
 # Associate the routing tables with the subnets
 resource "aws_route_table_association" "private_route_table_associations" {
+  provider = aws.sharedservicesprovisionaccount
+
   for_each = toset(var.private_subnet_cidr_blocks)
 
   subnet_id      = module.private.subnets[each.value].id
