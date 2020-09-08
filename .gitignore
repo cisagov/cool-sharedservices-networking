@@ -3,9 +3,6 @@ __pycache__
 __pycache__
 .python-version
 .terraform
-<<<<<<< HEAD
 *.tfvars
-=======
->>>>>>> 6c0060dbb7c895dee4d86a618d04d7032afe3b4a
 terraform.tfstate
 terraform.tfstate.backup
