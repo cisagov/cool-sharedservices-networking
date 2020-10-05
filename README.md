@@ -33,32 +33,33 @@ At this point the `ProvisionNetworking` policy is attached to the
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.12 |
+| terraform | ~> 0.12.0 |
+| aws | ~> 2.0 |
 
 ## Providers ##
 
 | Name | Version |
 |------|---------|
-| aws | n/a |
-| aws.organizationsreadonly | n/a |
-| aws.sharedservicesprovisionaccount | n/a |
+| aws | ~> 2.0 |
+| aws.organizationsreadonly | ~> 2.0 |
+| aws.sharedservicesprovisionaccount | ~> 2.0 |
 | terraform | n/a |
 
 ## Inputs ##
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-------:|:--------:|
-| aws_region | The AWS region to deploy into (e.g. us-east-1). | string | `us-east-1` | no |
-| cool_cidr_block | The overall CIDR block associated with the COOL (e.g. \"10.128.0.0/9\"). | string | | yes |
-| cool_domain | The domain where the COOL resources reside (e.g. "cool.cyber.dhs.gov"). | string | | yes |
-| private_subnet_cidr_blocks | The CIDR blocks corresponding to the private subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  These must be /24 blocks, since we are using them to create reverse DNS zones.  This list must be the same length as public_subnet_cidr_blocks, since each private subnet will be assigned a NAT gateway in a public subnet in the same Availability Zone. | list(string) | | yes |
-| provisionaccount_role_name | The name of the IAM role that allows sufficient permissions to provision all AWS resources in the Shared Services account. | string | `ProvisionAccount` | no |
-| provisionnetworking_policy_description | The description to associate with the IAM policy that allows provisioning of the networking layer in the Shared Services account. | string | `Allows provisioning of the networking layer in the Shared Services account.` | no |
-| provisionnetworking_policy_name | The name to associate with the IAM policy that allows provisioning of the networking layer in the Shared Services account. | string | `ProvisionNetworking` | no |
-| public_subnet_cidr_blocks | The CIDR blocks corresponding to the public subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  These must be /24 blocks, since we are using them to create reverse DNS zones.  This list must be the same length as private_subnet_cidr_blocks, since each private subnet will be assigned a NAT gateway in a public subnet in the same Availability Zone. | list(string) | | yes |
-| transit_gateway_description | The description to associate with the Transit Gateway in the Shared Services account that allows cross-VPC communication. | string | `The Transit Gateway in the Shared Services account that allows cross-VPC communication.` | no |
-| tags | Tags to apply to all AWS resources created. | map(string) | `{}` | no |
-| vpc_cidr_block | The overall CIDR block to be associated with the VPC (e.g. "10.10.0.0/16"). | string | | yes |
+|------|-------------|------|---------|:--------:|
+| aws_region | The AWS region where the shared services account is to be created (e.g. "us-east-1"). | `string` | `us-east-1` | no |
+| cool_cidr_block | The overall CIDR block associated with the COOL (e.g. "10.128.0.0/9"). | `string` | n/a | yes |
+| cool_domain | The domain where the COOL resources reside (e.g. "cool.cyber.dhs.gov"). | `string` | n/a | yes |
+| private_subnet_cidr_blocks | The CIDR blocks corresponding to the private subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  These must be /24 blocks, since we are using them to create reverse DNS zones.  This list must be the same length as public_subnet_cidr_blocks, since each private subnet will be assigned a NAT gateway in a public subnet in the same Availability Zone. | `list(string)` | n/a | yes |
+| provisionaccount_role_name | The name of the IAM role that allows sufficient permissions to provision all AWS resources in the Shared Services account. | `string` | `ProvisionAccount` | no |
+| provisionnetworking_policy_description | The description to associate with the IAM policy that allows provisioning of the networking layer in the Shared Services account. | `string` | `Allows provisioning of the networking layer in the Shared Services account.` | no |
+| provisionnetworking_policy_name | The name to assign the IAM policy that allows provisioning of the networking layer in the Shared Services account. | `string` | `ProvisionNetworking` | no |
+| public_subnet_cidr_blocks | The CIDR blocks corresponding to the public subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  These must be /24 blocks, since we are using them to create reverse DNS zones.  This list must be the same length as private_subnet_cidr_blocks, since each private subnet will be assigned a NAT gateway in a public subnet in the same Availability Zone. | `list(string)` | n/a | yes |
+| tags | Tags to apply to all AWS resources created. | `map(string)` | `{}` | no |
+| transit_gateway_description | The description to associate with the Transit Gateway in the Shared Services account that allows cross-VPC communication. | `string` | `The Transit Gateway in the Shared Services account that allows cross-VPC communication.` | no |
+| vpc_cidr_block | The overall CIDR block to be associated with the VPC (e.g. "10.10.0.0/16"). | `string` | n/a | yes |
 
 ## Outputs ##
 
@@ -66,16 +67,16 @@ At this point the `ProvisionNetworking` policy is attached to the
 |------|-------------|
 | default_route_table | The default route table for the VPC, which is used by the public subnets. |
 | private_route_tables | The route tables used by the private subnets in the VPC. |
-| private_subnets | The private subnets in the VPC. |
 | private_subnet_nat_gws | The NAT gateways used in the private subnets in the VPC. |
 | private_subnet_private_reverse_zones | The private Route53 reverse zones for the private subnets in the VPC. |
+| private_subnets | The private subnets in the VPC. |
 | private_zone | The private Route53 zone for the VPC. |
-| public_subnets | The public subnets in the VPC. |
 | public_subnet_private_reverse_zones | The private Route53 reverse zones for the public subnets in the VPC. |
+| public_subnets | The public subnets in the VPC. |
 | transit_gateway | The Transit Gateway that allows cross-VPC communication. |
 | transit_gateway_attachment_route_tables | Transit Gateway route tables for each of the accounts that are allowed to attach to the Transit Gateway.  These route tables ensure that these accounts can communicate with the Shared Services account but are isolated from each other. |
-| transit_gateway_ram_resource | The RAM resource share associated with the Transit Gateway that allows cross-VPC communication. |
 | transit_gateway_principal_associations | The RAM resource principal associations for the Transit Gateway that allows cross-VPC communication. |
+| transit_gateway_ram_resource | The RAM resource share associated with the Transit Gateway that allows cross-VPC communication. |
 | vpc | The shared services VPC. |
 
 ## Notes ##
