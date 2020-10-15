@@ -34,15 +34,15 @@ At this point the `ProvisionNetworking` policy is attached to the
 | Name | Version |
 |------|---------|
 | terraform | ~> 0.12.0 |
-| aws | ~> 2.0 |
+| aws | ~> 3.0 |
 
 ## Providers ##
 
 | Name | Version |
 |------|---------|
-| aws | ~> 2.0 |
-| aws.organizationsreadonly | ~> 2.0 |
-| aws.sharedservicesprovisionaccount | ~> 2.0 |
+| aws | ~> 3.0 |
+| aws.organizationsreadonly | ~> 3.0 |
+| aws.sharedservicesprovisionaccount | ~> 3.0 |
 | terraform | n/a |
 
 ## Inputs ##
