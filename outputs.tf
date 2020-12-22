@@ -28,6 +28,11 @@ output "private_zone" {
   description = "The private Route53 zone for the VPC."
 }
 
+output "provision_private_dns_records_role" {
+  value       = aws_iam_role.provisionprivatednsrecords_role
+  description = "The role that can provision DNS records in the private Route53 zone for the VPC."
+}
+
 output "public_subnet_private_reverse_zones" {
   value       = aws_route53_zone.public_subnet_private_reverse_zones
   description = "The private Route53 reverse zones for the public subnets in the VPC."
