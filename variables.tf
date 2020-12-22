@@ -59,6 +59,18 @@ variable "provisionnetworking_policy_name" {
   default     = "ProvisionNetworking"
 }
 
+variable "provisionprivatednsrecords_role_description" {
+  type        = string
+  description = "The description to associate with the IAM role (as well as the corresponding policy) that allows sufficient permissions to provision DNS records in private zones in the Shared Services account."
+  default     = "Allows sufficient permissions to provision DNS records in private zones in the Shared Services account."
+}
+
+variable "provisionprivatednsrecords_role_name" {
+  type        = string
+  description = "The name to assign the IAM role (as well as the corresponding policy) that allows sufficient permissions to provision DNS records in private zones in the Shared Services account."
+  default     = "ProvisionPrivateDNSRecords"
+}
+
 variable "tags" {
   type        = map(string)
   description = "Tags to apply to all AWS resources created."
