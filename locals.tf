@@ -51,4 +51,17 @@ locals {
     account.id => account.name
     if length(regexall("env[0-9]+ \\((${local.sharedservices_account_type})\\)", account.name)) > 0
   }
+
+  # Determine the PCA account of the same type
+  pca_account_same_type = {
+    for account in data.aws_organizations_organization.cool.accounts :
+    account.id => account.name
+    if length(regexall("PCA \\((${local.sharedservices_account_type})\\)", account.name)) > 0
+  }
+
+  # Find the Users account by name and email.
+  users_account_id = [
+    for x in data.aws_organizations_organization.cool.accounts :
+    x.id if x.name == "Users" && length(regexall("2020", x.email)) > 0
+  ][0]
 }
