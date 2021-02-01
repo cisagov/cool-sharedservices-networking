@@ -61,12 +61,14 @@ resource "aws_ram_principal_association" "tgw" {
 # the Transit Gateway.  Each of these route tables only allows traffic
 # to flow between the shared services VPC and the account that is
 # allowed to attach to the Transit Gateway.  This way the accounts are
-# isolated from each other.
+# isolated from each other.  Note that certain accounts (e.g. Shared
+# Services and User Services) use the default TGW route table and are not
+# specifically mentioned below.
 #
 resource "aws_ec2_transit_gateway_route_table" "tgw_attachments" {
   provider = aws.sharedservicesprovisionaccount
 
-  for_each = merge(local.env_accounts_same_type, local.pca_account_same_type, local.userservices_account_same_type)
+  for_each = merge(local.env_accounts_same_type, local.pca_account_same_type)
 
   transit_gateway_id = aws_ec2_transit_gateway.tgw.id
 }
@@ -74,7 +76,7 @@ resource "aws_ec2_transit_gateway_route_table" "tgw_attachments" {
 resource "aws_ec2_transit_gateway_route" "sharedservices_routes" {
   provider = aws.sharedservicesprovisionaccount
 
-  for_each = merge(local.env_accounts_same_type, local.pca_account_same_type, local.userservices_account_same_type)
+  for_each = merge(local.env_accounts_same_type, local.pca_account_same_type)
 
   destination_cidr_block         = aws_vpc.the_vpc.cidr_block
   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.tgw.id
