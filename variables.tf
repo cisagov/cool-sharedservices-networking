@@ -24,6 +24,11 @@ variable "public_subnet_cidr_blocks" {
   description = "The CIDR blocks corresponding to the public subnets to be associated with the VPC (e.g. [\"10.10.0.0/24\", \"10.10.1.0/24\"]).  These must be /24 blocks, since we are using them to create reverse DNS zones.  This list must be the same length as private_subnet_cidr_blocks, since each private subnet will be assigned a NAT gateway in a public subnet in the same Availability Zone."
 }
 
+variable "venom_vpn_preshared_key" {
+  type        = string
+  description = "The pre-shared key to use for setting up the site-to-site VPN connection between the COOL and VENOM..  This must be a string of 36 characters, which can include alphanumerics, periods, and underscores (e.g. \"abcdefghijklmnopqrstuvwxyz0123456789\")."
+}
+
 variable "vpc_cidr_block" {
   type        = string
   description = "The overall CIDR block to be associated with the VPC (e.g. \"10.10.0.0/16\")."

@@ -63,6 +63,11 @@ output "transit_gateway_ram_resource" {
   description = "The RAM resource share associated with the Transit Gateway that allows cross-VPC communication."
 }
 
+output "venom_vpn_connection" {
+  value       = aws_vpn_connection.venom
+  description = "The site-to-site VPN connection to VENOM."
+}
+
 output "vpc" {
   value       = aws_vpc.the_vpc
   description = "The shared services VPC."
