@@ -45,12 +45,12 @@ resource "aws_ram_resource_association" "tgw" {
 
 #
 # Share the resource with the other accounts that are allowed to
-# access it (currently the env* and PCA accounts).
+# access it (currently the env*, PCA, and User Services accounts).
 #
 resource "aws_ram_principal_association" "tgw" {
   provider = aws.sharedservicesprovisionaccount
 
-  for_each = merge(local.env_accounts_same_type, local.pca_account_same_type)
+  for_each = merge(local.env_accounts_same_type, local.pca_account_same_type, local.userservices_account_same_type)
 
   principal          = each.key
   resource_share_arn = aws_ram_resource_share.tgw.id
@@ -61,7 +61,9 @@ resource "aws_ram_principal_association" "tgw" {
 # the Transit Gateway.  Each of these route tables only allows traffic
 # to flow between the shared services VPC and the account that is
 # allowed to attach to the Transit Gateway.  This way the accounts are
-# isolated from each other.
+# isolated from each other.  Note that certain accounts (e.g. Shared
+# Services and User Services) use the default TGW route table and are not
+# specifically mentioned below.
 #
 resource "aws_ec2_transit_gateway_route_table" "tgw_attachments" {
   provider = aws.sharedservicesprovisionaccount
