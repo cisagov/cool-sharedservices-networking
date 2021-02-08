@@ -73,6 +73,7 @@ At this point the `ProvisionNetworking` policy is attached to the
 | private_subnet_private_reverse_zones | The private Route53 reverse zones for the private subnets in the VPC. |
 | private_subnets | The private subnets in the VPC. |
 | private_zone | The private Route53 zone for the VPC. |
+| provision_private_dns_records_role | The role that can provision DNS records in the private Route53 zone for the VPC. |
 | public_subnet_private_reverse_zones | The private Route53 reverse zones for the public subnets in the VPC. |
 | public_subnets | The public subnets in the VPC. |
 | transit_gateway | The Transit Gateway that allows cross-VPC communication. |
