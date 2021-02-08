@@ -63,6 +63,11 @@ output "transit_gateway_ram_resource" {
   description = "The RAM resource share associated with the Transit Gateway that allows cross-VPC communication."
 }
 
+output "transit_gateway_sharedservices_vpc_attachment" {
+  value       = aws_ec2_transit_gateway_vpc_attachment.tgw
+  description = "The Transit Gateway attachment to the Shared Services VPC."
+}
+
 output "vpc" {
   value       = aws_vpc.the_vpc
   description = "The shared services VPC."
