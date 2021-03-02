@@ -43,6 +43,8 @@ At this point the `ProvisionNetworking` policy is attached to the
 | aws | ~> 3.0 |
 | aws.organizationsreadonly | ~> 3.0 |
 | aws.sharedservicesprovisionaccount | ~> 3.0 |
+| aws.terraformprovisionaccount | ~> 3.0 |
+| aws.users | ~> 3.0 |
 | terraform | n/a |
 
 ## Inputs ##
