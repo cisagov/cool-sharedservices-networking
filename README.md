@@ -49,6 +49,8 @@ At this point the `ProvisionNetworking` policy is attached to the
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| assume_read_terraform_state_policy_description | The description to associate with the IAM policy that allows assumption of the role that allows read-only access to Terraform state for cool-sharedservices-networking. | `string` | `Allow assumption of the ReadSharedServicesNetworkingTerraformState role in the Terraform account.` | no |
+| assume_read_terraform_state_policy_name | The name to assign the IAM policy that allows assumption of the role that allows read-only access to Terraform state for cool-sharedservices-networking. | `string` | `AssumeReadSharedServicesNetworkingTerraformState` | no |
 | aws_region | The AWS region where the shared services account is to be created (e.g. "us-east-1"). | `string` | `us-east-1` | no |
 | cool_cidr_block | The overall CIDR block associated with the COOL (e.g. "10.128.0.0/9"). | `string` | n/a | yes |
 | cool_domain | The domain where the COOL resources reside (e.g. "cool.cyber.dhs.gov"). | `string` | n/a | yes |
@@ -59,6 +61,8 @@ At this point the `ProvisionNetworking` policy is attached to the
 | provisionprivatednsrecords_role_description | The description to associate with the IAM role (as well as the corresponding policy) that allows sufficient permissions to provision DNS records in private zones in the Shared Services account. | `string` | `Allows sufficient permissions to provision DNS records in private zones in the Shared Services account.` | no |
 | provisionprivatednsrecords_role_name | The name to assign the IAM role (as well as the corresponding policy) that allows sufficient permissions to provision DNS records in private zones in the Shared Services account. | `string` | `ProvisionPrivateDNSRecords` | no |
 | public_subnet_cidr_blocks | The CIDR blocks corresponding to the public subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  These must be /24 blocks, since we are using them to create reverse DNS zones.  This list must be the same length as private_subnet_cidr_blocks, since each private subnet will be assigned a NAT gateway in a public subnet in the same Availability Zone. | `list(string)` | n/a | yes |
+| read_terraform_state_role_description | The description to associate with the IAM role (as well as the corresponding policy) that allows read-only access to the cool-sharedservices-networking state in the S3 bucket where Terraform state is stored. | `string` | `Allows read-only access to the cool-sharedservices-networking state in the S3 bucket where Terraform state is stored.` | no |
+| read_terraform_state_role_name | The name to assign the IAM role (as well as the corresponding policy) that allows read-only access to the cool-sharedservices-networking state in the S3 bucket where Terraform state is stored. | `string` | `ReadSharedServicesNetworkingTerraformState` | no |
 | tags | Tags to apply to all AWS resources created. | `map(string)` | `{}` | no |
 | transit_gateway_description | The description to associate with the Transit Gateway in the Shared Services account that allows cross-VPC communication. | `string` | `The Transit Gateway in the Shared Services account that allows cross-VPC communication.` | no |
 | vpc_cidr_block | The overall CIDR block to be associated with the VPC (e.g. "10.10.0.0/16"). | `string` | n/a | yes |
