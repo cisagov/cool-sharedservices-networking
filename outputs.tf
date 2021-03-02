@@ -1,3 +1,8 @@
+output "assume_read_terraform_state_role_policy" {
+  value       = aws_iam_policy.assume_read_terraform_state_role
+  description = "The policy that allows assumption of the role that allows read-only access to the cool-sharedservices-networking state in the Terraform state bucket."
+}
+
 output "default_route_table" {
   value       = aws_default_route_table.public
   description = "The default route table for the VPC, which is used by the public subnets."
@@ -41,6 +46,11 @@ output "public_subnet_private_reverse_zones" {
 output "public_subnets" {
   value       = module.public.subnets
   description = "The public subnets in the VPC."
+}
+
+output "read_terraform_state_role" {
+  value       = aws_iam_role.read_terraform_state
+  description = "The role that allows read-only access to the cool-sharedservices-networking state in the Terraform state bucket."
 }
 
 output "transit_gateway" {

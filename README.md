@@ -71,6 +71,7 @@ At this point the `ProvisionNetworking` policy is attached to the
 
 | Name | Description |
 |------|-------------|
+| assume_read_terraform_state_role_policy | The policy that allows assumption of the role that allows read-only access to the cool-sharedservices-networking state in the Terraform state bucket. |
 | default_route_table | The default route table for the VPC, which is used by the public subnets. |
 | private_route_tables | The route tables used by the private subnets in the VPC. |
 | private_subnet_nat_gws | The NAT gateways used in the private subnets in the VPC. |
@@ -80,6 +81,7 @@ At this point the `ProvisionNetworking` policy is attached to the
 | provision_private_dns_records_role | The role that can provision DNS records in the private Route53 zone for the VPC. |
 | public_subnet_private_reverse_zones | The private Route53 reverse zones for the public subnets in the VPC. |
 | public_subnets | The public subnets in the VPC. |
+| read_terraform_state_role | The role that allows read-only access to the cool-sharedservices-networking state in the Terraform state bucket. |
 | transit_gateway | The Transit Gateway that allows cross-VPC communication. |
 | transit_gateway_attachment_route_tables | Transit Gateway route tables for each of the accounts that are allowed to attach to the Transit Gateway.  These route tables ensure that these accounts can communicate with the Shared Services account but are isolated from each other. |
 | transit_gateway_principal_associations | The RAM resource principal associations for the Transit Gateway that allows cross-VPC communication. |
