@@ -44,13 +44,13 @@ resource "aws_ram_resource_association" "tgw" {
 }
 
 #
-# Share the resource with the other accounts that are allowed to
-# access it (currently the env*, PCA, and User Services accounts).
+# Share the resource with the other accounts that are allowed to access
+# it (currently the Domain Manger, env*, PCA, and User Services accounts).
 #
 resource "aws_ram_principal_association" "tgw" {
   provider = aws.sharedservicesprovisionaccount
 
-  for_each = merge(local.env_accounts_same_type, local.pca_account_same_type, local.userservices_account_same_type)
+  for_each = merge(local.domainmanager_account_same_type, local.env_accounts_same_type, local.pca_account_same_type, local.userservices_account_same_type)
 
   principal          = each.key
   resource_share_arn = aws_ram_resource_share.tgw.id
@@ -68,7 +68,7 @@ resource "aws_ram_principal_association" "tgw" {
 resource "aws_ec2_transit_gateway_route_table" "tgw_attachments" {
   provider = aws.sharedservicesprovisionaccount
 
-  for_each = merge(local.env_accounts_same_type, local.pca_account_same_type)
+  for_each = merge(local.domainmanager_account_same_type, local.env_accounts_same_type, local.pca_account_same_type)
 
   transit_gateway_id = aws_ec2_transit_gateway.tgw.id
 }
@@ -76,7 +76,7 @@ resource "aws_ec2_transit_gateway_route_table" "tgw_attachments" {
 resource "aws_ec2_transit_gateway_route" "sharedservices_routes" {
   provider = aws.sharedservicesprovisionaccount
 
-  for_each = merge(local.env_accounts_same_type, local.pca_account_same_type)
+  for_each = merge(local.domainmanager_account_same_type, local.env_accounts_same_type, local.pca_account_same_type)
 
   destination_cidr_block         = aws_vpc.the_vpc.cidr_block
   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.tgw.id
