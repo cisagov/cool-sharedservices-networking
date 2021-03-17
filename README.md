@@ -89,7 +89,9 @@ At this point the `ProvisionNetworking` policy is attached to the
 | transit_gateway_principal_associations | The RAM resource principal associations for the Transit Gateway that allows cross-VPC communication. |
 | transit_gateway_ram_resource | The RAM resource share associated with the Transit Gateway that allows cross-VPC communication. |
 | transit_gateway_sharedservices_vpc_attachment | The Transit Gateway attachment to the Shared Services VPC. |
-| vpc | The shared services VPC. |
+| vpc | The Shared Services VPC. |
+| vpc_dhcp_options | The DHCP options for the Shared Services VPC. |
+| vpc_dhcp_options_association | The DHCP options association for the Shared Services VPC. |
 
 ## Notes ##
 

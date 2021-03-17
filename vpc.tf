@@ -19,6 +19,23 @@ resource "aws_vpc" "the_vpc" {
   tags                 = var.tags
 }
 
+# DHCP options for instances that run in the Shared Services VPC
+resource "aws_vpc_dhcp_options" "the_dhcp_options" {
+  provider = aws.sharedservicesprovisionaccount
+
+  domain_name         = var.cool_domain
+  domain_name_servers = ["AmazonProvidedDNS"]
+  tags                = var.tags
+}
+
+# Associate the DHCP options with the Shared Services VPC
+resource "aws_vpc_dhcp_options_association" "the_dhcp_options_association" {
+  provider = aws.sharedservicesprovisionaccount
+
+  vpc_id          = aws_vpc.the_vpc.id
+  dhcp_options_id = aws_vpc_dhcp_options.the_dhcp_options.id
+}
+
 # The internet gateway for the VPC
 resource "aws_internet_gateway" "the_igw" {
   provider = aws.sharedservicesprovisionaccount

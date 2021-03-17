@@ -80,5 +80,15 @@ output "transit_gateway_sharedservices_vpc_attachment" {
 
 output "vpc" {
   value       = aws_vpc.the_vpc
-  description = "The shared services VPC."
+  description = "The Shared Services VPC."
+}
+
+output "vpc_dhcp_options" {
+  value       = aws_vpc_dhcp_options.the_dhcp_options
+  description = "The DHCP options for the Shared Services VPC."
+}
+
+output "vpc_dhcp_options_association" {
+  value       = aws_vpc_dhcp_options_association.the_dhcp_options_association
+  description = "The DHCP options association for the Shared Services VPC."
 }

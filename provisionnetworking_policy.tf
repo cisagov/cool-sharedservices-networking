@@ -7,8 +7,10 @@ data "aws_iam_policy_document" "provisionnetworking_policy_doc" {
   statement {
     actions = [
       "ec2:AllocateAddress",
+      "ec2:AssociateDhcpOptions",
       "ec2:AssociateRouteTable",
       "ec2:AttachInternetGateway",
+      "ec2:CreateDhcpOptions",
       "ec2:CreateFlowLogs",
       "ec2:CreateInternetGateway",
       "ec2:CreateNatGateway",
@@ -23,6 +25,7 @@ data "aws_iam_policy_document" "provisionnetworking_policy_doc" {
       "ec2:CreateTransitGatewayRouteTable",
       "ec2:CreateTransitGatewayVpcAttachment",
       "ec2:CreateVpc",
+      "ec2:DeleteDhcpOptions",
       "ec2:DeleteInternetGateway",
       "ec2:DeleteNatGateway",
       "ec2:DeleteNetworkAcl",
