@@ -45,6 +45,13 @@ locals {
   # example, "Shared Services (Production)".
   sharedservices_account_type = length(regexall("\\(([^()]*)\\)", local.sharedservices_account_name)) == 1 ? regex("\\(([^()]*)\\)", local.sharedservices_account_name)[0] : "Unknown"
 
+  # Determine the Domain Manager account of the same type
+  domainmanager_account_same_type = {
+    for account in data.aws_organizations_organization.cool.accounts :
+    account.id => account.name
+    if length(regexall("Domain Manager \\((${local.sharedservices_account_type})\\)", account.name)) > 0
+  }
+
   # Determine the env* accounts of the same type
   env_accounts_same_type = {
     for account in data.aws_organizations_organization.cool.accounts :
