@@ -35,18 +35,6 @@ variable "vpc_cidr_block" {
 # These parameters have reasonable defaults.
 # ------------------------------------------------------------------------------
 
-variable "assume_read_terraform_state_policy_description" {
-  type        = string
-  description = "The description to associate with the IAM policy that allows assumption of the role that allows read-only access to Terraform state for cool-sharedservices-networking."
-  default     = "Allow assumption of the ReadSharedServicesNetworkingTerraformState role in the Terraform account."
-}
-
-variable "assume_read_terraform_state_policy_name" {
-  type        = string
-  description = "The name to assign the IAM policy that allows assumption of the role that allows read-only access to Terraform state for cool-sharedservices-networking."
-  default     = "AssumeReadSharedServicesNetworkingTerraformState"
-}
-
 variable "aws_region" {
   type        = string
   description = "The AWS region where the shared services account is to be created (e.g. \"us-east-1\")."
@@ -81,12 +69,6 @@ variable "provisionprivatednsrecords_role_name" {
   type        = string
   description = "The name to assign the IAM role (as well as the corresponding policy) that allows sufficient permissions to provision DNS records in private zones in the Shared Services account."
   default     = "ProvisionPrivateDNSRecords"
-}
-
-variable "read_terraform_state_role_description" {
-  type        = string
-  description = "The description to associate with the IAM role (as well as the corresponding policy) that allows read-only access to the cool-sharedservices-networking state in the S3 bucket where Terraform state is stored."
-  default     = "Allows read-only access to the cool-sharedservices-networking state in the S3 bucket where Terraform state is stored."
 }
 
 variable "read_terraform_state_role_name" {
