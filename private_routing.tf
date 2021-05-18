@@ -56,3 +56,13 @@ resource "aws_route_table_association" "private_route_table_associations" {
   subnet_id      = module.private.subnets[each.value].id
   route_table_id = aws_route_table.private_route_tables[each.value].id
 }
+
+# Associate the S3 gateway endpoint with each of the route tables
+resource "aws_vpc_endpoint_route_table_association" "s3_private" {
+  provider = aws.sharedservicesprovisionaccount
+
+  for_each = toset(var.private_subnet_cidr_blocks)
+
+  route_table_id  = aws_route_table.private_route_tables[each.value].id
+  vpc_endpoint_id = aws_vpc_endpoint.s3.id
+}
