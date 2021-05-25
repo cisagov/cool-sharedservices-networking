@@ -87,3 +87,8 @@ output "vpc_dhcp_options_association" {
   value       = aws_vpc_dhcp_options_association.the_dhcp_options_association
   description = "The DHCP options association for the Shared Services VPC."
 }
+
+output "vpc_endpoint_s3" {
+  value       = aws_vpc_endpoint.s3
+  description = "The S3 gateway endpoint for the Shared Services VPC."
+}
