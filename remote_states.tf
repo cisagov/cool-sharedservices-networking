@@ -11,9 +11,9 @@ data "terraform_remote_state" "master" {
     encrypt        = true
     bucket         = "cisa-cool-terraform-state"
     dynamodb_table = "terraform-state-lock"
+    key            = "cool-accounts/master.tfstate"
     profile        = "cool-terraform-backend"
     region         = "us-east-1"
-    key            = "cool-accounts/master.tfstate"
   }
 
   # There is only one environment for this account, so there is
@@ -28,9 +28,9 @@ data "terraform_remote_state" "sharedservices" {
     encrypt        = true
     bucket         = "cisa-cool-terraform-state"
     dynamodb_table = "terraform-state-lock"
+    key            = "cool-accounts/shared_services.tfstate"
     profile        = "cool-terraform-backend"
     region         = "us-east-1"
-    key            = "cool-accounts/shared_services.tfstate"
   }
 
   workspace = terraform.workspace
@@ -43,9 +43,9 @@ data "terraform_remote_state" "terraform" {
     encrypt        = true
     bucket         = "cisa-cool-terraform-state"
     dynamodb_table = "terraform-state-lock"
+    key            = "cool-accounts/terraform.tfstate"
     profile        = "cool-terraform-backend"
     region         = "us-east-1"
-    key            = "cool-accounts/terraform.tfstate"
   }
 
   # There is only one environment for this account, so there is
@@ -60,9 +60,9 @@ data "terraform_remote_state" "users" {
     encrypt        = true
     bucket         = "cisa-cool-terraform-state"
     dynamodb_table = "terraform-state-lock"
+    key            = "cool-accounts/users.tfstate"
     profile        = "cool-terraform-backend"
     region         = "us-east-1"
-    key            = "cool-accounts/users.tfstate"
   }
 
   # There is only one environment for this account, so there is
