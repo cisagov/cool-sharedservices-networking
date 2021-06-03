@@ -3,45 +3,60 @@
 # the other providers.
 
 provider "aws" {
+  default_tags {
+    tags = var.tags
+  }
   region = var.aws_region
 }
 
 # The provider used to lookup account IDs.  See locals.
 provider "aws" {
-  alias  = "organizationsreadonly"
-  region = var.aws_region
+  alias = "organizationsreadonly"
   assume_role {
     role_arn     = data.terraform_remote_state.master.outputs.organizationsreadonly_role.arn
     session_name = local.caller_user_name
   }
+  default_tags {
+    tags = var.tags
+  }
+  region = var.aws_region
 }
 
 # The provider used to create resources inside the Shared Services account.
 provider "aws" {
-  alias  = "sharedservicesprovisionaccount"
-  region = var.aws_region
+  alias = "sharedservicesprovisionaccount"
   assume_role {
     role_arn     = data.terraform_remote_state.sharedservices.outputs.provisionaccount_role.arn
     session_name = local.caller_user_name
   }
+  default_tags {
+    tags = var.tags
+  }
+  region = var.aws_region
 }
 
 # The provider used to create resources inside the Terraform account.
 provider "aws" {
-  alias  = "terraformprovisionaccount"
-  region = var.aws_region
+  alias = "terraformprovisionaccount"
   assume_role {
     role_arn     = data.terraform_remote_state.terraform.outputs.provisionaccount_role.arn
     session_name = local.caller_user_name
   }
+  default_tags {
+    tags = var.tags
+  }
+  region = var.aws_region
 }
 
 # The provider used to create resources inside the Users account.
 provider "aws" {
-  alias  = "users"
-  region = var.aws_region
+  alias = "users"
   assume_role {
     role_arn     = data.terraform_remote_state.users.outputs.provisionaccount_role.arn
     session_name = local.caller_user_name
   }
+  default_tags {
+    tags = var.tags
+  }
+  region = var.aws_region
 }

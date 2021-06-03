@@ -11,7 +11,6 @@ resource "aws_default_route_table" "public" {
   provider = aws.sharedservicesprovisionaccount
 
   default_route_table_id = aws_vpc.the_vpc.default_route_table_id
-  tags                   = var.tags
 }
 
 # Route all non-local COOL (outside this VPC but inside the COOL)

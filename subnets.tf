@@ -16,7 +16,6 @@ module "public" {
 
   vpc_id             = aws_vpc.the_vpc.id
   subnet_cidr_blocks = var.public_subnet_cidr_blocks
-  tags               = var.tags
 }
 
 module "private" {
@@ -27,7 +26,6 @@ module "private" {
 
   vpc_id             = aws_vpc.the_vpc.id
   subnet_cidr_blocks = var.private_subnet_cidr_blocks
-  tags               = var.tags
 }
 
 #-------------------------------------------------------------------------------
@@ -43,8 +41,7 @@ resource "aws_eip" "nat_gw_eips" {
   ]
   for_each = toset(var.private_subnet_cidr_blocks)
 
-  tags = var.tags
-  vpc  = true
+  vpc = true
 }
 
 resource "aws_nat_gateway" "nat_gws" {
@@ -67,5 +64,4 @@ resource "aws_nat_gateway" "nat_gws" {
   # private subnets, each of which is using a NAT GW in a public
   # subnet in the same AZ.
   subnet_id = module.public.subnets[var.public_subnet_cidr_blocks[index(var.private_subnet_cidr_blocks, each.value)]].id
-  tags      = var.tags
 }

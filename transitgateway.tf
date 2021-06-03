@@ -16,7 +16,6 @@ resource "aws_ec2_transit_gateway" "tgw" {
 
   auto_accept_shared_attachments = "enable"
   description                    = var.transit_gateway_description
-  tags                           = var.tags
 }
 
 #
@@ -34,7 +33,6 @@ resource "aws_ram_resource_share" "tgw" {
 
   allow_external_principals = true
   name                      = "SharedServices-TransitGateway"
-  tags                      = var.tags
 }
 resource "aws_ram_resource_association" "tgw" {
   provider = aws.sharedservicesprovisionaccount
