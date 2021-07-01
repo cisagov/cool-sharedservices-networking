@@ -13,7 +13,6 @@ resource "aws_route53_zone" "private_zone" {
   }
 
   name = var.cool_domain
-  tags = var.tags
   vpc {
     vpc_id = aws_vpc.the_vpc.id
   }
@@ -37,7 +36,6 @@ resource "aws_route53_zone" "private_subnet_private_reverse_zones" {
     element(split(".", each.value), 1),
     element(split(".", each.value), 0),
   )
-  tags = var.tags
   vpc {
     vpc_id = aws_vpc.the_vpc.id
   }
@@ -58,7 +56,6 @@ resource "aws_route53_zone" "public_subnet_private_reverse_zones" {
     element(split(".", each.value), 1),
     element(split(".", each.value), 0),
   )
-  tags = var.tags
   vpc {
     vpc_id = aws_vpc.the_vpc.id
   }

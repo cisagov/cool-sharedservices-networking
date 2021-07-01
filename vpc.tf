@@ -16,7 +16,6 @@ resource "aws_vpc" "the_vpc" {
 
   cidr_block           = var.vpc_cidr_block
   enable_dns_hostnames = true
-  tags                 = var.tags
 }
 
 # DHCP options for instances that run in the Shared Services VPC
@@ -25,7 +24,6 @@ resource "aws_vpc_dhcp_options" "the_dhcp_options" {
 
   domain_name         = var.cool_domain
   domain_name_servers = ["AmazonProvidedDNS"]
-  tags                = var.tags
 }
 
 # Associate the DHCP options with the Shared Services VPC
@@ -41,7 +39,6 @@ resource "aws_internet_gateway" "the_igw" {
   provider = aws.sharedservicesprovisionaccount
 
   vpc_id = aws_vpc.the_vpc.id
-  tags   = var.tags
 }
 
 # Attach the VPC to the Transit Gateway
@@ -53,7 +50,6 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw" {
   ]
 
   subnet_ids         = [for cidr, subnet in module.private.subnets : subnet.id]
-  tags               = var.tags
   transit_gateway_id = aws_ec2_transit_gateway.tgw.id
   vpc_id             = aws_vpc.the_vpc.id
 }

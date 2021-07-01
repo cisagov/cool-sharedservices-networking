@@ -19,7 +19,6 @@ resource "aws_route_table" "private_route_tables" {
 
   for_each = toset(var.private_subnet_cidr_blocks)
 
-  tags   = var.tags
   vpc_id = aws_vpc.the_vpc.id
 }
 
