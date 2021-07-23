@@ -34,60 +34,114 @@ At this point the `ProvisionNetworking` policy is attached to the
 | Name | Version |
 |------|---------|
 | terraform | ~> 0.12.0 |
-| aws | ~> 3.0 |
+| aws | ~> 3.38 |
 
 ## Providers ##
 
 | Name | Version |
 |------|---------|
-| aws | ~> 3.0 |
-| aws.organizationsreadonly | ~> 3.0 |
-| aws.sharedservicesprovisionaccount | ~> 3.0 |
-| aws.terraformprovisionaccount | ~> 3.0 |
-| aws.users | ~> 3.0 |
+| aws | ~> 3.38 |
+| aws.organizationsreadonly | ~> 3.38 |
+| aws.sharedservicesprovisionaccount | ~> 3.38 |
 | terraform | n/a |
+
+## Modules ##
+
+| Name | Source | Version |
+|------|--------|---------|
+| private | github.com/cisagov/distributed-subnets-tf-module |  |
+| public | github.com/cisagov/distributed-subnets-tf-module |  |
+| read\_terraform\_state | github.com/cisagov/terraform-state-read-role-tf-module |  |
+| vpc\_flow\_logs | trussworks/vpc-flow-logs/aws | >=2.0.0, <2.1.0 |
+
+## Resources ##
+
+| Name | Type |
+|------|------|
+| [aws_default_route_table.public](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/default_route_table) | resource |
+| [aws_ec2_transit_gateway.tgw](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_transit_gateway) | resource |
+| [aws_ec2_transit_gateway_route.sharedservices_routes](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_transit_gateway_route) | resource |
+| [aws_ec2_transit_gateway_route_table.tgw_attachments](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_transit_gateway_route_table) | resource |
+| [aws_ec2_transit_gateway_vpc_attachment.tgw](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_transit_gateway_vpc_attachment) | resource |
+| [aws_eip.nat_gw_eips](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip) | resource |
+| [aws_iam_policy.provisionnetworking_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
+| [aws_iam_policy.provisionprivatednsrecords_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
+| [aws_iam_role.provisionprivatednsrecords_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy_attachment.provisionnetworking_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.provisionprivatednsrecords_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_internet_gateway.the_igw](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/internet_gateway) | resource |
+| [aws_nat_gateway.nat_gws](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/nat_gateway) | resource |
+| [aws_ram_principal_association.tgw](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ram_principal_association) | resource |
+| [aws_ram_resource_association.tgw](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ram_resource_association) | resource |
+| [aws_ram_resource_share.tgw](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ram_resource_share) | resource |
+| [aws_route.cool_route](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route) | resource |
+| [aws_route.cool_routes](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route) | resource |
+| [aws_route.external_route](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route) | resource |
+| [aws_route.external_routes](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route) | resource |
+| [aws_route53_zone.private_subnet_private_reverse_zones](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_zone) | resource |
+| [aws_route53_zone.private_zone](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_zone) | resource |
+| [aws_route53_zone.public_subnet_private_reverse_zones](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_zone) | resource |
+| [aws_route_table.private_route_tables](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table) | resource |
+| [aws_route_table_association.private_route_table_associations](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association) | resource |
+| [aws_vpc.the_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc) | resource |
+| [aws_vpc_dhcp_options.the_dhcp_options](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_dhcp_options) | resource |
+| [aws_vpc_dhcp_options_association.the_dhcp_options_association](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_dhcp_options_association) | resource |
+| [aws_vpc_endpoint.s3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_endpoint) | resource |
+| [aws_vpc_endpoint_route_table_association.s3_private](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_endpoint_route_table_association) | resource |
+| [aws_vpc_endpoint_route_table_association.s3_public](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_endpoint_route_table_association) | resource |
+| [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
+| [aws_caller_identity.sharedservices](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
+| [aws_iam_policy_document.assume_role_doc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_iam_policy_document.provisionnetworking_policy_doc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_iam_policy_document.provisionprivatednsrecords_policy_doc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_organizations_organization.cool](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/organizations_organization) | data source |
+| [terraform_remote_state.master](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/data-sources/remote_state) | data source |
+| [terraform_remote_state.sharedservices](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/data-sources/remote_state) | data source |
+| [terraform_remote_state.terraform](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/data-sources/remote_state) | data source |
+| [terraform_remote_state.users](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/data-sources/remote_state) | data source |
 
 ## Inputs ##
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| aws_region | The AWS region where the shared services account is to be created (e.g. "us-east-1"). | `string` | `us-east-1` | no |
-| cool_cidr_block | The overall CIDR block associated with the COOL (e.g. "10.128.0.0/9"). | `string` | n/a | yes |
-| cool_domain | The domain where the COOL resources reside (e.g. "cool.cyber.dhs.gov"). | `string` | n/a | yes |
-| private_subnet_cidr_blocks | The CIDR blocks corresponding to the private subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  These must be /24 blocks, since we are using them to create reverse DNS zones.  This list must be the same length as public_subnet_cidr_blocks, since each private subnet will be assigned a NAT gateway in a public subnet in the same Availability Zone. | `list(string)` | n/a | yes |
-| provisionaccount_role_name | The name of the IAM role that allows sufficient permissions to provision all AWS resources in the Shared Services account. | `string` | `ProvisionAccount` | no |
-| provisionnetworking_policy_description | The description to associate with the IAM policy that allows provisioning of the networking layer in the Shared Services account. | `string` | `Allows provisioning of the networking layer in the Shared Services account.` | no |
-| provisionnetworking_policy_name | The name to assign the IAM policy that allows provisioning of the networking layer in the Shared Services account. | `string` | `ProvisionNetworking` | no |
-| provisionprivatednsrecords_role_description | The description to associate with the IAM role (as well as the corresponding policy) that allows sufficient permissions to provision DNS records in private zones in the Shared Services account. | `string` | `Allows sufficient permissions to provision DNS records in private zones in the Shared Services account.` | no |
-| provisionprivatednsrecords_role_name | The name to assign the IAM role (as well as the corresponding policy) that allows sufficient permissions to provision DNS records in private zones in the Shared Services account. | `string` | `ProvisionPrivateDNSRecords` | no |
-| public_subnet_cidr_blocks | The CIDR blocks corresponding to the public subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  These must be /24 blocks, since we are using them to create reverse DNS zones.  This list must be the same length as private_subnet_cidr_blocks, since each private subnet will be assigned a NAT gateway in a public subnet in the same Availability Zone. | `list(string)` | n/a | yes |
-| read_terraform_state_role_name | The name to assign the IAM role (as well as the corresponding policy) that allows read-only access to the cool-sharedservices-networking state in the S3 bucket where Terraform state is stored. | `string` | `ReadSharedServicesNetworkingTerraformState` | no |
+| aws\_region | The AWS region where the shared services account is to be created (e.g. "us-east-1"). | `string` | `"us-east-1"` | no |
+| cool\_cidr\_block | The overall CIDR block associated with the COOL (e.g. "10.128.0.0/9"). | `string` | n/a | yes |
+| cool\_domain | The domain where the COOL resources reside (e.g. "cool.cyber.dhs.gov"). | `string` | n/a | yes |
+| private\_subnet\_cidr\_blocks | The CIDR blocks corresponding to the private subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  These must be /24 blocks, since we are using them to create reverse DNS zones.  This list must be the same length as public\_subnet\_cidr\_blocks, since each private subnet will be assigned a NAT gateway in a public subnet in the same Availability Zone. | `list(string)` | n/a | yes |
+| provisionaccount\_role\_name | The name of the IAM role that allows sufficient permissions to provision all AWS resources in the Shared Services account. | `string` | `"ProvisionAccount"` | no |
+| provisionnetworking\_policy\_description | The description to associate with the IAM policy that allows provisioning of the networking layer in the Shared Services account. | `string` | `"Allows provisioning of the networking layer in the Shared Services account."` | no |
+| provisionnetworking\_policy\_name | The name to assign the IAM policy that allows provisioning of the networking layer in the Shared Services account. | `string` | `"ProvisionNetworking"` | no |
+| provisionprivatednsrecords\_role\_description | The description to associate with the IAM role (as well as the corresponding policy) that allows sufficient permissions to provision DNS records in private zones in the Shared Services account. | `string` | `"Allows sufficient permissions to provision DNS records in private zones in the Shared Services account."` | no |
+| provisionprivatednsrecords\_role\_name | The name to assign the IAM role (as well as the corresponding policy) that allows sufficient permissions to provision DNS records in private zones in the Shared Services account. | `string` | `"ProvisionPrivateDNSRecords"` | no |
+| public\_subnet\_cidr\_blocks | The CIDR blocks corresponding to the public subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  These must be /24 blocks, since we are using them to create reverse DNS zones.  This list must be the same length as private\_subnet\_cidr\_blocks, since each private subnet will be assigned a NAT gateway in a public subnet in the same Availability Zone. | `list(string)` | n/a | yes |
+| read\_terraform\_state\_role\_name | The name to assign the IAM role (as well as the corresponding policy) that allows read-only access to the cool-sharedservices-networking state in the S3 bucket where Terraform state is stored. | `string` | `"ReadSharedServicesNetworkingTerraformState"` | no |
 | tags | Tags to apply to all AWS resources created. | `map(string)` | `{}` | no |
-| transit_gateway_description | The description to associate with the Transit Gateway in the Shared Services account that allows cross-VPC communication. | `string` | `The Transit Gateway in the Shared Services account that allows cross-VPC communication.` | no |
-| vpc_cidr_block | The overall CIDR block to be associated with the VPC (e.g. "10.10.0.0/16"). | `string` | n/a | yes |
+| transit\_gateway\_description | The description to associate with the Transit Gateway in the Shared Services account that allows cross-VPC communication. | `string` | `"The Transit Gateway in the Shared Services account that allows cross-VPC communication."` | no |
+| vpc\_cidr\_block | The overall CIDR block to be associated with the VPC (e.g. "10.10.0.0/16"). | `string` | n/a | yes |
 
 ## Outputs ##
 
 | Name | Description |
 |------|-------------|
-| default_route_table | The default route table for the VPC, which is used by the public subnets. |
-| private_route_tables | The route tables used by the private subnets in the VPC. |
-| private_subnet_nat_gws | The NAT gateways used in the private subnets in the VPC. |
-| private_subnet_private_reverse_zones | The private Route53 reverse zones for the private subnets in the VPC. |
-| private_subnets | The private subnets in the VPC. |
-| private_zone | The private Route53 zone for the VPC. |
-| provision_private_dns_records_role | The role that can provision DNS records in the private Route53 zone for the VPC. |
-| public_subnet_private_reverse_zones | The private Route53 reverse zones for the public subnets in the VPC. |
-| public_subnets | The public subnets in the VPC. |
-| read_terraform_state | The IAM policies and role that allow read-only access to the cool-sharedservices-networking state in the Terraform state bucket. |
-| transit_gateway | The Transit Gateway that allows cross-VPC communication. |
-| transit_gateway_attachment_route_tables | Transit Gateway route tables for each of the accounts that are allowed to attach to the Transit Gateway.  These route tables ensure that these accounts can communicate with the Shared Services account but are isolated from each other. |
-| transit_gateway_principal_associations | The RAM resource principal associations for the Transit Gateway that allows cross-VPC communication. |
-| transit_gateway_ram_resource | The RAM resource share associated with the Transit Gateway that allows cross-VPC communication. |
-| transit_gateway_sharedservices_vpc_attachment | The Transit Gateway attachment to the Shared Services VPC. |
+| default\_route\_table | The default route table for the VPC, which is used by the public subnets. |
+| private\_route\_tables | The route tables used by the private subnets in the VPC. |
+| private\_subnet\_nat\_gws | The NAT gateways used in the private subnets in the VPC. |
+| private\_subnet\_private\_reverse\_zones | The private Route53 reverse zones for the private subnets in the VPC. |
+| private\_subnets | The private subnets in the VPC. |
+| private\_zone | The private Route53 zone for the VPC. |
+| provision\_private\_dns\_records\_role | The role that can provision DNS records in the private Route53 zone for the VPC. |
+| public\_subnet\_private\_reverse\_zones | The private Route53 reverse zones for the public subnets in the VPC. |
+| public\_subnets | The public subnets in the VPC. |
+| read\_terraform\_state | The IAM policies and role that allow read-only access to the cool-sharedservices-networking state in the Terraform state bucket. |
+| transit\_gateway | The Transit Gateway that allows cross-VPC communication. |
+| transit\_gateway\_attachment\_route\_tables | Transit Gateway route tables for each of the accounts that are allowed to attach to the Transit Gateway.  These route tables ensure that these accounts can communicate with the Shared Services account but are isolated from each other. |
+| transit\_gateway\_principal\_associations | The RAM resource principal associations for the Transit Gateway that allows cross-VPC communication. |
+| transit\_gateway\_ram\_resource | The RAM resource share associated with the Transit Gateway that allows cross-VPC communication. |
+| transit\_gateway\_sharedservices\_vpc\_attachment | The Transit Gateway attachment to the Shared Services VPC. |
 | vpc | The Shared Services VPC. |
-| vpc_dhcp_options | The DHCP options for the Shared Services VPC. |
-| vpc_dhcp_options_association | The DHCP options association for the Shared Services VPC. |
+| vpc\_dhcp\_options | The DHCP options for the Shared Services VPC. |
+| vpc\_dhcp\_options\_association | The DHCP options association for the Shared Services VPC. |
+| vpc\_endpoint\_s3 | The S3 gateway endpoint for the Shared Services VPC. |
 
 ## Notes ##
 
