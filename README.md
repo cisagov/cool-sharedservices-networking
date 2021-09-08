@@ -49,9 +49,9 @@ At this point the `ProvisionNetworking` policy is attached to the
 
 | Name | Source | Version |
 |------|--------|---------|
-| private | github.com/cisagov/distributed-subnets-tf-module |  |
-| public | github.com/cisagov/distributed-subnets-tf-module |  |
-| read\_terraform\_state | github.com/cisagov/terraform-state-read-role-tf-module |  |
+| private | github.com/cisagov/distributed-subnets-tf-module | n/a |
+| public | github.com/cisagov/distributed-subnets-tf-module | n/a |
+| read\_terraform\_state | github.com/cisagov/terraform-state-read-role-tf-module | n/a |
 | vpc\_flow\_logs | trussworks/vpc-flow-logs/aws | >=2.0.0, <2.1.0 |
 
 ## Resources ##
