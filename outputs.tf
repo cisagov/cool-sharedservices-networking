@@ -1,3 +1,8 @@
+output "cool_cidr_block" {
+  value       = var.cool_cidr_block
+  description = "The overall CIDR block associated with the COOL."
+}
+
 output "default_route_table" {
   value       = aws_default_route_table.public
   description = "The default route table for the VPC, which is used by the public subnets."
