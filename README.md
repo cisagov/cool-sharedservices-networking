@@ -123,6 +123,7 @@ At this point the `ProvisionNetworking` policy is attached to the
 
 | Name | Description |
 |------|-------------|
+| cool\_cidr\_block | The overall CIDR block associated with the COOL. |
 | default\_route\_table | The default route table for the VPC, which is used by the public subnets. |
 | private\_route\_tables | The route tables used by the private subnets in the VPC. |
 | private\_subnet\_nat\_gws | The NAT gateways used in the private subnets in the VPC. |
