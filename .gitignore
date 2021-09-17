@@ -10,7 +10,7 @@ __pycache__
 
 ## Terraform ##
 .terraform
-*.tfvars
+.terraform.lock.hcl
 terraform.tfstate
 terraform.tfstate.backup
 *.tfvars
