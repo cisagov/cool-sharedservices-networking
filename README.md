@@ -52,7 +52,7 @@ At this point the `ProvisionNetworking` policy is attached to the
 | private | github.com/cisagov/distributed-subnets-tf-module | n/a |
 | public | github.com/cisagov/distributed-subnets-tf-module | n/a |
 | read\_terraform\_state | github.com/cisagov/terraform-state-read-role-tf-module | n/a |
-| vpc\_flow\_logs | trussworks/vpc-flow-logs/aws | >=2.0.0, <2.1.0 |
+| vpc\_flow\_logs | trussworks/vpc-flow-logs/aws | ~>2.0 |
 
 ## Resources ##
 
@@ -83,6 +83,8 @@ At this point the `ProvisionNetworking` policy is attached to the
 | [aws_route53_zone.public_subnet_private_reverse_zones](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_zone) | resource |
 | [aws_route_table.private_route_tables](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table) | resource |
 | [aws_route_table_association.private_route_table_associations](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association) | resource |
+| [aws_security_group.s3_endpoint_client](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
+| [aws_security_group_rule.egress_to_s3_endpoint_via_https](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
 | [aws_vpc.the_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc) | resource |
 | [aws_vpc_dhcp_options.the_dhcp_options](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_dhcp_options) | resource |
 | [aws_vpc_dhcp_options_association.the_dhcp_options_association](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_dhcp_options_association) | resource |
@@ -134,6 +136,7 @@ At this point the `ProvisionNetworking` policy is attached to the
 | public\_subnet\_private\_reverse\_zones | The private Route53 reverse zones for the public subnets in the VPC. |
 | public\_subnets | The public subnets in the VPC. |
 | read\_terraform\_state | The IAM policies and role that allow read-only access to the cool-sharedservices-networking state in the Terraform state bucket. |
+| s3\_endpoint\_client\_security\_group | A security group for any instances that wish to communicate with the S3 VPC endpoint. |
 | transit\_gateway | The Transit Gateway that allows cross-VPC communication. |
 | transit\_gateway\_attachment\_route\_tables | Transit Gateway route tables for each of the accounts that are allowed to attach to the Transit Gateway.  These route tables ensure that these accounts can communicate with the Shared Services account but are isolated from each other. |
 | transit\_gateway\_principal\_associations | The RAM resource principal associations for the Transit Gateway that allows cross-VPC communication. |
