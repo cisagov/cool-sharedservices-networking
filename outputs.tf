@@ -53,6 +53,11 @@ output "read_terraform_state" {
   description = "The IAM policies and role that allow read-only access to the cool-sharedservices-networking state in the Terraform state bucket."
 }
 
+output "s3_endpoint_client_security_group" {
+  value       = aws_security_group.s3_endpoint_client
+  description = "A security group for any instances that wish to communicate with the S3 VPC endpoint."
+}
+
 output "transit_gateway" {
   value       = aws_ec2_transit_gateway.tgw
   description = "The Transit Gateway that allows cross-VPC communication."
