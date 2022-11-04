@@ -1,3 +1,8 @@
+output "cloudwatch_agent_endpoint_client_security_group" {
+  value       = aws_security_group.cloudwatch_agent_endpoint_client
+  description = "A security group for any instances that run the AWS CloudWatch agent.  This security groups allows such instances to communicate with the VPC endpoints that are required by the AWS CloudWatch agent."
+}
+
 output "cool_cidr_block" {
   value       = var.cool_cidr_block
   description = "The overall CIDR block associated with the COOL."
@@ -6,6 +11,11 @@ output "cool_cidr_block" {
 output "default_route_table" {
   value       = aws_default_route_table.public
   description = "The default route table for the VPC, which is used by the public subnets."
+}
+
+output "ec2_endpoint_client_security_group" {
+  value       = aws_security_group.ec2_endpoint_client
+  description = "A security group for any instances that wish to communicate with the EC2 VPC endpoint."
 }
 
 output "private_route_tables" {
@@ -56,6 +66,21 @@ output "read_terraform_state" {
 output "s3_endpoint_client_security_group" {
   value       = aws_security_group.s3_endpoint_client
   description = "A security group for any instances that wish to communicate with the S3 VPC endpoint."
+}
+
+output "ssm_agent_endpoint_client_security_group" {
+  value       = aws_security_group.ssm_agent_endpoint_client
+  description = "A security group for any instances that run the AWS SSM agent.  This security group allows such instances to communicate with the VPC endpoints that are required by the AWS SSM agent."
+}
+
+output "ssm_endpoint_client_security_group" {
+  value       = aws_security_group.ssm_endpoint_client
+  description = "A security group for any instances that wish to communicate with the SSM VPC endpoint."
+}
+
+output "sts_endpoint_client_security_group" {
+  value       = aws_security_group.sts_endpoint_client
+  description = "A security group for any instances that wish to communicate with the STS VPC endpoint."
 }
 
 output "transit_gateway" {
