@@ -6,7 +6,7 @@ resource "aws_security_group" "ssm_endpoint" {
   vpc_id = aws_vpc.the_vpc.id
 
   tags = {
-    Name = "SSM endpoints"
+    Name = "SSM endpoint"
   }
 }
 
