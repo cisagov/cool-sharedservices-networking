@@ -9,7 +9,7 @@ resource "aws_security_group" "sts_endpoint_client" {
   }
 }
 
-# Allow egress via HTTPS from the STS endpoint security group.
+# Allow egress via HTTPS to the STS endpoint security group.
 resource "aws_security_group_rule" "egress_from_sts_endpoint_client_to_sts_endpoint_via_https" {
   provider = aws.sharedservicesprovisionaccount
 
