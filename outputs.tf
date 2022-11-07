@@ -1,6 +1,6 @@
 output "cloudwatch_agent_endpoint_client_security_group" {
   value       = aws_security_group.cloudwatch_agent_endpoint_client
-  description = "A security group for any instances that run the AWS CloudWatch agent.  This security groups allows such instances to communicate with the VPC endpoints that are required by the AWS CloudWatch agent."
+  description = "A security group for any instances that run the AWS CloudWatch agent.  This security group allows such instances to communicate with the VPC endpoints that are required by the AWS CloudWatch agent."
 }
 
 output "cool_cidr_block" {

@@ -161,7 +161,7 @@ At this point the `ProvisionNetworking` policy is attached to the
 
 | Name | Description |
 |------|-------------|
-| cloudwatch\_agent\_endpoint\_client\_security\_group | A security group for any instances that run the AWS CloudWatch agent.  This security groups allows such instances to communicate with the VPC endpoints that are required by the AWS CloudWatch agent. |
+| cloudwatch\_agent\_endpoint\_client\_security\_group | A security group for any instances that run the AWS CloudWatch agent.  This security group allows such instances to communicate with the VPC endpoints that are required by the AWS CloudWatch agent. |
 | cool\_cidr\_block | The overall CIDR block associated with the COOL. |
 | default\_route\_table | The default route table for the VPC, which is used by the public subnets. |
 | ec2\_endpoint\_client\_security\_group | A security group for any instances that wish to communicate with the EC2 VPC endpoint. |
