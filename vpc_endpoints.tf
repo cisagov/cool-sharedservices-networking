@@ -25,7 +25,7 @@ resource "aws_vpc_endpoint" "ec2" {
 
   private_dns_enabled = true
   security_group_ids = [
-    # The CloudWatch agent reads a few pieces of data from the ec2
+    # The CloudWatch agent reads a few pieces of data from the EC2
     # endpoint.  You can see this by inspecting the AWS-provided
     # CloudWatchAgentServerPolicyIAM policy.
     aws_security_group.cloudwatch_agent_endpoint.id,
