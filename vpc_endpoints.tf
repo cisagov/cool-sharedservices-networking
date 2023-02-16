@@ -122,14 +122,6 @@ resource "aws_vpc_endpoint_subnet_association" "sts" {
 # Note that SSM requires several other endpoints to function properly.
 # See here for more details:
 # https://docs.aws.amazon.com/systems-manager/latest/userguide/setup-create-vpc.html#sysman-setting-up-vpc-create
-resource "aws_vpc_endpoint_subnet_association" "ssm" {
-  provider = aws.sharedservicesprovisionaccount
-
-  for_each = toset(var.private_subnet_cidr_blocks)
-
-  subnet_id       = module.private.subnets[each.value].id
-  vpc_endpoint_id = aws_vpc_endpoint.ssm.id
-}
 resource "aws_vpc_endpoint_subnet_association" "ec2" {
   provider = aws.sharedservicesprovisionaccount
 
@@ -153,6 +145,14 @@ resource "aws_vpc_endpoint_subnet_association" "kms" {
 
   subnet_id       = module.private.subnets[each.value].id
   vpc_endpoint_id = aws_vpc_endpoint.kms.id
+}
+resource "aws_vpc_endpoint_subnet_association" "ssm" {
+  provider = aws.sharedservicesprovisionaccount
+
+  for_each = toset(var.private_subnet_cidr_blocks)
+
+  subnet_id       = module.private.subnets[each.value].id
+  vpc_endpoint_id = aws_vpc_endpoint.ssm.id
 }
 resource "aws_vpc_endpoint_subnet_association" "ssmmessages" {
   provider = aws.sharedservicesprovisionaccount
