@@ -73,7 +73,7 @@ locals {
     if length(regexall("User Services \\((${local.sharedservices_account_type})\\)", account.name)) > 0
   }
 
-  # Find the Users account by name and email.
+  # Find the Users account by name.
   users_account_id = [
     for x in data.aws_organizations_organization.cool.accounts :
     x.id if x.name == "Users"
