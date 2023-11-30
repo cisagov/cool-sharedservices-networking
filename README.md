@@ -29,20 +29,21 @@ At this point the `ProvisionNetworking` policy is attached to the
 - Access to all of the Terraform remote states specified in
   [remote_states.tf](remote_states.tf).
 
+<!-- BEGIN_TF_DOCS -->
 ## Requirements ##
 
 | Name | Version |
 |------|---------|
 | terraform | ~> 1.0 |
-| aws | ~> 3.38 |
+| aws | ~> 4.9 |
 
 ## Providers ##
 
 | Name | Version |
 |------|---------|
-| aws | ~> 3.38 |
-| aws.organizationsreadonly | ~> 3.38 |
-| aws.sharedservicesprovisionaccount | ~> 3.38 |
+| aws | ~> 4.9 |
+| aws.organizationsreadonly | ~> 4.9 |
+| aws.sharedservicesprovisionaccount | ~> 4.9 |
 | terraform | n/a |
 
 ## Modules ##
@@ -187,6 +188,7 @@ At this point the `ProvisionNetworking` policy is attached to the
 | vpc\_dhcp\_options | The DHCP options for the Shared Services VPC. |
 | vpc\_dhcp\_options\_association | The DHCP options association for the Shared Services VPC. |
 | vpc\_endpoint\_s3 | The S3 gateway endpoint for the Shared Services VPC. |
+<!-- END_TF_DOCS -->
 
 ## Notes ##
 
