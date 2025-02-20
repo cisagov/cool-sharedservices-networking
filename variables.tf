@@ -30,6 +30,7 @@ variable "public_subnet_cidr_blocks" {
 
 variable "terraform_state_bucket" {
   description = "The name of the S3 bucket where Terraform state is stored."
+  nullable    = false
   type        = string
 }
 
