@@ -34,48 +34,47 @@ locals {
   # Look up Shared Services account name from AWS organizations
   # provider
   sharedservices_account_name = [
-    for account in data.aws_organizations_organization.cool.accounts :
+    for account in data.aws_organizations_organization.cool.non_master_accounts :
     account.name
     if account.id == local.sharedservices_account_id
   ][0]
 
-  # Determine Shared Services account type based on account name.
-  #
-  # The account name format is "ACCOUNT_NAME (ACCOUNT_TYPE)" - for
-  # example, "Shared Services (Production)".
-  sharedservices_account_type = length(regexall("\\(([^()]*)\\)", local.sharedservices_account_name)) == 1 ? regex("\\(([^()]*)\\)", local.sharedservices_account_name)[0] : "Unknown"
+  # Determine the various account IDs that are the same type (production,
+  # staging, etc.) as the Shared Services account.
+  # Account name format:  "ACCOUNT_NAME (ACCOUNT_TYPE)"
+  #         For example:  "Shared Services (Production)"
+  # NOTE: Originally, Shared Services, User Services, and dynamic assessment
+  # environment account names followed the "ACCOUNT_NAME (ACCOUNT_TYPE)" format
+  # above, but our thinking has changed and in newer environments the accounts
+  # are simply called "Shared Services", "User Services", and "env0" (for
+  # example).  However, until all legacy environments have been migrated to this
+  # new naming scheme, we must check the Shared Services account name via the
+  # regex below to determine whether we are using the legacy naming scheme or
+  # not.
+  sharedservices_account_name_type = length(regexall("\\(([^()]*)\\)", local.sharedservices_account_name)) == 1 ? "legacy" : "current"
 
-  # Determine the Domain Manager account of the same type
-  domainmanager_account_same_type = {
-    for account in data.aws_organizations_organization.cool.accounts :
-    account.id => account.name
-    if length(regexall("Domain Manager \\((${local.sharedservices_account_type})\\)", account.name)) > 0
-  }
+  assessment_account_name_regex = local.sharedservices_account_name_type == "legacy" ? format("^env[[:digit:]]+ \\(%s\\)$", trim(split("(", local.sharedservices_account_name)[1], ")")) : "^env[[:digit:]]+$"
 
-  # Determine the env* accounts of the same type
+  userservices_account_name_regex = local.sharedservices_account_name_type == "legacy" ? format("^User Services \\(%s\\)$", trim(split("(", local.sharedservices_account_name)[1], ")")) : "^User Services$"
+
+  # Build a list of dynamic assessment account IDs whose account names match our
+  # regex.
   env_accounts_same_type = {
-    for account in data.aws_organizations_organization.cool.accounts :
+    for account in data.aws_organizations_organization.cool.non_master_accounts :
     account.id => account.name
-    if length(regexall("env[0-9]+ \\((${local.sharedservices_account_type})\\)", account.name)) > 0
-  }
-
-  # Determine the PCA account of the same type
-  pca_account_same_type = {
-    for account in data.aws_organizations_organization.cool.accounts :
-    account.id => account.name
-    if length(regexall("PCA \\((${local.sharedservices_account_type})\\)", account.name)) > 0
+    if length(regexall(local.assessment_account_name_regex, account.name)) > 0
   }
 
   # Determine the User Services account of the same type
   userservices_account_same_type = {
-    for account in data.aws_organizations_organization.cool.accounts :
+    for account in data.aws_organizations_organization.cool.non_master_accounts :
     account.id => account.name
-    if length(regexall("User Services \\((${local.sharedservices_account_type})\\)", account.name)) > 0
+    if length(regexall(local.userservices_account_name_regex, account.name)) > 0
   }
 
   # Find the Users account by name.
   users_account_id = [
-    for x in data.aws_organizations_organization.cool.accounts :
+    for x in data.aws_organizations_organization.cool.non_master_accounts :
     x.id if x.name == "Users"
   ][0]
 }

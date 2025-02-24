@@ -155,6 +155,7 @@ At this point the `ProvisionNetworking` policy is attached to the
 | public\_subnet\_cidr\_blocks | The CIDR blocks corresponding to the public subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  These must be /24 blocks, since we are using them to create reverse DNS zones.  This list must be the same length as private\_subnet\_cidr\_blocks, since each private subnet will be assigned a NAT gateway in a public subnet in the same Availability Zone. | `list(string)` | n/a | yes |
 | read\_terraform\_state\_role\_name | The name to assign the IAM role (as well as the corresponding policy) that allows read-only access to the cool-sharedservices-networking state in the S3 bucket where Terraform state is stored. | `string` | `"ReadSharedServicesNetworkingTerraformState"` | no |
 | tags | Tags to apply to all AWS resources created. | `map(string)` | `{}` | no |
+| terraform\_state\_bucket | The name of the S3 bucket where Terraform state is stored. | `string` | n/a | yes |
 | transit\_gateway\_description | The description to associate with the Transit Gateway in the Shared Services account that allows cross-VPC communication. | `string` | `"The Transit Gateway in the Shared Services account that allows cross-VPC communication."` | no |
 | vpc\_cidr\_block | The overall CIDR block to be associated with the VPC (e.g. "10.10.0.0/16"). | `string` | n/a | yes |
 
