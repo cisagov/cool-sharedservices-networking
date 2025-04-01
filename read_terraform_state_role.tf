@@ -14,6 +14,6 @@ module "read_terraform_state" {
 
   account_ids                 = [local.users_account_id]
   role_name                   = var.read_terraform_state_role_name
-  terraform_state_bucket_name = "cisa-cool-terraform-state"
+  terraform_state_bucket_name = var.terraform_state_bucket
   terraform_state_path        = "cool-sharedservices-networking/*.tfstate"
 }
