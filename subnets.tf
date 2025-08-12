@@ -41,7 +41,7 @@ resource "aws_eip" "nat_gw_eips" {
   ]
   for_each = toset(var.private_subnet_cidr_blocks)
 
-  vpc = true
+  domain = "vpc"
 }
 
 resource "aws_nat_gateway" "nat_gws" {
