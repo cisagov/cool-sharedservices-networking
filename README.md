@@ -1,6 +1,8 @@
 # cool-sharedservices-networking #
 
 [![GitHub Build Status](https://github.com/cisagov/cool-sharedservices-networking/workflows/build/badge.svg)](https://github.com/cisagov/cool-sharedservices-networking/actions)
+[![License](https://img.shields.io/github/license/cisagov/cool-sharedservices-networking)](https://spdx.org/licenses/)
+[![CodeQL](https://github.com/cisagov/cool-sharedservices-networking/workflows/CodeQL/badge.svg)](https://github.com/cisagov/cool-sharedservices-networking/actions/workflows/codeql-analysis.yml)
 
 This is a Terraform deployment for creating the VPC, public subnets,
 and private subnets for the COOL Shared Services account.
