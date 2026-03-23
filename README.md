@@ -35,14 +35,14 @@ At this point the `ProvisionNetworking` policy is attached to the
 ## Requirements ##
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | terraform | ~> 1.1 |
 | aws | ~> 6.7 |
 
 ## Providers ##
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | aws | ~> 6.7 |
 | aws.organizationsreadonly | ~> 6.7 |
 | aws.sharedservicesprovisionaccount | ~> 6.7 |
@@ -51,7 +51,7 @@ At this point the `ProvisionNetworking` policy is attached to the
 ## Modules ##
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | private | github.com/cisagov/distributed-subnets-tf-module | n/a |
 | public | github.com/cisagov/distributed-subnets-tf-module | n/a |
 | read\_terraform\_state | github.com/cisagov/terraform-state-read-role-tf-module | n/a |
@@ -60,7 +60,7 @@ At this point the `ProvisionNetworking` policy is attached to the
 ## Resources ##
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [aws_default_route_table.public](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/default_route_table) | resource |
 | [aws_ec2_transit_gateway.tgw](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_transit_gateway) | resource |
 | [aws_ec2_transit_gateway_route.sharedservices_routes](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_transit_gateway_route) | resource |
@@ -144,7 +144,7 @@ At this point the `ProvisionNetworking` policy is attached to the
 ## Inputs ##
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | aws\_region | The AWS region where the shared services account is to be created (e.g. "us-east-1"). | `string` | `"us-east-1"` | no |
 | cool\_cidr\_block | The overall CIDR block associated with the COOL (e.g. "10.128.0.0/9"). | `string` | n/a | yes |
 | cool\_domain | The domain where the COOL resources reside (e.g. "cool.cyber.dhs.gov"). | `string` | n/a | yes |
@@ -164,7 +164,7 @@ At this point the `ProvisionNetworking` policy is attached to the
 ## Outputs ##
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | cloudwatch\_agent\_endpoint\_client\_security\_group | A security group for any instances that run the AWS CloudWatch agent.  This security group allows such instances to communicate with the VPC endpoints that are required by the AWS CloudWatch agent. |
 | cool\_cidr\_block | The overall CIDR block associated with the COOL. |
 | default\_route\_table | The default route table for the VPC, which is used by the public subnets. |
