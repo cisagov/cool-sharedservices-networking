@@ -31,45 +31,24 @@ locals {
   # The Shared Services account ID
   sharedservices_account_id = data.aws_caller_identity.sharedservices.account_id
 
-  # Look up Shared Services account name from AWS organizations
-  # provider
-  sharedservices_account_name = [
-    for account in data.aws_organizations_organization.cool.non_master_accounts :
-    account.name
-    if account.id == local.sharedservices_account_id
-  ][0]
-
-  # Determine the various account IDs that are the same type (production,
-  # staging, etc.) as the Shared Services account.
-  # Account name format:  "ACCOUNT_NAME (ACCOUNT_TYPE)"
-  #         For example:  "Shared Services (Production)"
-  # NOTE: Originally, Shared Services, User Services, and dynamic assessment
-  # environment account names followed the "ACCOUNT_NAME (ACCOUNT_TYPE)" format
-  # above, but our thinking has changed and in newer environments the accounts
-  # are simply called "Shared Services", "User Services", and "env0" (for
-  # example).  However, until all legacy environments have been migrated to this
-  # new naming scheme, we must check the Shared Services account name via the
-  # regex below to determine whether we are using the legacy naming scheme or
-  # not.
-  sharedservices_account_name_type = length(regexall("\\(([^()]*)\\)", local.sharedservices_account_name)) == 1 ? "legacy" : "current"
-
-  assessment_account_name_regex = local.sharedservices_account_name_type == "legacy" ? format("^env[[:digit:]]+ \\(%s\\)$", trim(split("(", local.sharedservices_account_name)[1], ")")) : "^env[[:digit:]]+$"
-
-  userservices_account_name_regex = local.sharedservices_account_name_type == "legacy" ? format("^User Services \\(%s\\)$", trim(split("(", local.sharedservices_account_name)[1], ")")) : "^User Services$"
+  # Regex to match dynamic assessment account names
+  assessment_account_name_regex = "^env[[:digit:]]+$"
 
   # Build a list of dynamic assessment account IDs whose account names match our
-  # regex.
-  env_accounts_same_type = {
+  # regex.  They are needed so that they can attach to the Transit Gateway and
+  # have TGW route tables created for them.
+  env_accounts = {
     for account in data.aws_organizations_organization.cool.non_master_accounts :
     account.id => account.name
     if length(regexall(local.assessment_account_name_regex, account.name)) > 0
   }
 
-  # Determine the User Services account of the same type
-  userservices_account_same_type = {
+  # Determine the User Services account ID; it is needed so that it can attach
+  # to the Transit Gateway.
+  userservices_account = {
     for account in data.aws_organizations_organization.cool.non_master_accounts :
     account.id => account.name
-    if length(regexall(local.userservices_account_name_regex, account.name)) > 0
+    if length(regexall("^User Services$", account.name)) > 0
   }
 
   # Find the Users account by name.

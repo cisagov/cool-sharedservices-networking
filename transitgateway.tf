@@ -48,7 +48,7 @@ resource "aws_ram_resource_association" "tgw" {
 resource "aws_ram_principal_association" "tgw" {
   provider = aws.sharedservicesprovisionaccount
 
-  for_each = merge(local.env_accounts_same_type, local.userservices_account_same_type)
+  for_each = merge(local.env_accounts, local.userservices_account)
 
   principal          = each.key
   resource_share_arn = aws_ram_resource_share.tgw.id
@@ -66,7 +66,7 @@ resource "aws_ram_principal_association" "tgw" {
 resource "aws_ec2_transit_gateway_route_table" "tgw_attachments" {
   provider = aws.sharedservicesprovisionaccount
 
-  for_each = local.env_accounts_same_type
+  for_each = local.env_accounts
 
   transit_gateway_id = aws_ec2_transit_gateway.tgw.id
 }
@@ -74,7 +74,7 @@ resource "aws_ec2_transit_gateway_route_table" "tgw_attachments" {
 resource "aws_ec2_transit_gateway_route" "sharedservices_routes" {
   provider = aws.sharedservicesprovisionaccount
 
-  for_each = tomap(local.env_accounts_same_type)
+  for_each = tomap(local.env_accounts)
 
   destination_cidr_block         = aws_vpc.the_vpc.cidr_block
   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.tgw.id
